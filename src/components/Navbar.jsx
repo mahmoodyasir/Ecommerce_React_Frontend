@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {useGlobalState} from "../state/provider";
 
 const Navbar = () => {
-    const [{profile, cart_incomplete}, { }] = useGlobalState()
+    const [{profile, cart_incomplete}, dispatch] = useGlobalState()
     let cart_product_length = 0
     if (cart_incomplete !== null)
     {
@@ -15,6 +15,15 @@ const Navbar = () => {
     }
 
     // console.log(profile, " From Navbar Page")
+
+    const logout = () => {
+        window.localStorage.clear()
+        dispatch({
+            type: "ADD_PROFILE",
+            profile: null
+        })
+        window.location.href = '/'
+    }
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <Link className="navbar-brand" to="/">Ecommerce </Link>
@@ -31,7 +40,7 @@ const Navbar = () => {
                                 <>
                                     <Link className="nav-link" to="/cart">Cart({cart_product_length})</Link>
                                     <Link className="nav-link" to="/profile">Profile</Link>
-                                    <Link className="nav-link" to="#">Logout</Link>
+                                    <Link onClick={logout} className="nav-link" to="">Logout</Link>
                                 </>
                             )
                             :

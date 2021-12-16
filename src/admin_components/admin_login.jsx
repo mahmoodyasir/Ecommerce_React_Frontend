@@ -8,22 +8,29 @@ const LoginPage = () => {
     const loginrequest = async() => {
         await Axios({
             method: "post",
-            url: `${domain}/api/login/`,
+            url: `${domain}/api/admin_login/`,
             data:{
                 'username':username,
                 'password':password
             }
         }).then(response => {
-            console.log(response.data['token']);
-            window.localStorage.setItem("token", response.data['token'])
-            window.location.href = '/'
+            console.log(response.data['message']);
+            window.localStorage.setItem("admin_token", response.data['admin_token'])
+            let value = response.data['message']
+            if (value === true){
+                window.location.href = '/admin_dashboard'
+            }
+            else {
+                alert("You are not a valid user !! ")
+            }
+
         }).catch(_=>{
             alert("Your username or password is incorrect !! Try Again ....")
         })
     }
     return (
         <div className="container mt-4 col-md-4">
-            <h1>Login Page</h1>
+            <h1>Admin Login Panel</h1>
             <div className="form-group">
                 <label >Username</label>
                 <input onChange={(e) => setUsername(e.target.value)} type="text" className="form-control"  placeholder="Username" />
