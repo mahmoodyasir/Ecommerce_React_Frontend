@@ -16,10 +16,14 @@ import Order from "./components/Order";
 import OrderDetails from "./components/OrderDetails";
 import admin_login from "./admin_components/admin_login";
 import Admin_dashboard from "./admin_components/admin_dashboard";
+import Admin_Profile from "./admin_components/Admin_Profile";
+import {Admin_Logout} from "./admin_components/Admin_Logout";
+import Add_Category from "./admin_components/Add_Category";
+import Only_Products from "./admin_components/Add_Product";
 
 const App = () =>{
     // console.log(userToken, " this is userToken")
-    const [{profile, page_reload, admin_profile, cart_incomplete, cart_complete}, dispatch] = useGlobalState()
+    const [{profile, page_reload, admin_profile, cart_incomplete, cart_complete, category_product, only_product}, dispatch] = useGlobalState()
     // console.log(cart_complete, "#### cart complete ####")
     // console.log(cart_incomplete, "#### cart Incomplete ####")
     // console.log(profile, "$$$ User Profile")
@@ -101,18 +105,65 @@ const App = () =>{
     }, [dispatch, page_reload]);
 
 
+    useEffect(() => {
+        const category = async () => {
+            await Axios({
+                method: "get",
+                url: `${domain}/api/category/`,
+                headers: admin_header
+            }).then(response =>{
+                // console.log(response.data, " CATEGORY ");
+                {
+                    const category_data = []
+                    // eslint-disable-next-line array-callback-return
+                    response?.data.map(data => {
+
+                    category_data.push(data)
+                    dispatch({
+                           type: "CATEGORY_PRODUCT",
+                           category_product: category_data
+                         })
+
+                    })
+                }
+            })
+        }
+        category()
+    }, [dispatch, admin_profile]);
+
+
+    useEffect(() => {
+        const  only_product = async () => {
+            await Axios({
+                method: "get",
+                url: `${domain}/api/product/`,
+                headers: admin_header
+            }).then(response =>{
+                console.log(response.data, " ONLY PRODUCTS ");
+                dispatch({
+                     type: "ONLY_PRODUCT",
+                     only_product: response.data
+                })
+            })
+        }
+        only_product()
+    }, [dispatch, admin_profile]);
+
   return (
       <BrowserRouter>
-          <Navbar/>
           <Switch>
-              <Route exact path="/" component={HomePage}/>
-              <Route exact path="/product/:id" component={ProductDetails}/>
-              <Route exact path="/category/:id" component={CategoryProducts}/>
               <Route exact path="/admin_login" component={admin_login}/>
               {
                   admin_profile !== null ? (
                       <>
-                          <Route exact path="/admin_dashboard" component={Admin_dashboard}/>
+                           {/*<Route exact path="/admin_dashboard" component={Admin_dashboard}/>*/}
+                          <Admin_dashboard />
+                          <Switch>
+                                <Route exact path="/profile_role/admin_profile" component={Admin_Profile}/>
+                                <Route exact path="/admin_action/add_category" component={Add_Category}/>
+                                <Route exact path="/admin_action/add_product" component={Only_Products}/>
+                                <Route exact path="/admin_logout" component={Admin_Logout}/>
+                          </Switch>
                       </>
                   ):
                       ("")
@@ -120,17 +171,27 @@ const App = () =>{
               {
                   profile !== null ? (
                       <>
+                          <Navbar/>
                           <Route exact path="/profile" component={ProfilePage} />
                           <Route exact path="/cart" component={Cart} />
                           <Route exact path="/oldorders" component={Oldorders} />
                           <Route exact path="/order" component={Order} />
                           <Route exact path="/orderdetails/:id" component={OrderDetails} />
+
+                          <Route exact path="/" component={HomePage}/>
+                          <Route exact path="/product/:id" component={ProductDetails}/>
+                          <Route exact path="/category/:id" component={CategoryProducts}/>
                       </>
                   ):
                       (
                           <>
+                              <Navbar/>
                               <Route exact path="/login" component={LoginPage} />
                               <Route exact path="/register" component={RegisterPage} />
+
+                              <Route exact path="/" component={HomePage}/>
+                              <Route exact path="/product/:id" component={ProductDetails}/>
+                              <Route exact path="/category/:id" component={CategoryProducts}/>
                           </>
                       )
 

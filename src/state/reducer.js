@@ -3,7 +3,9 @@ export const initialstate = {
     page_reload: null,
     cart_incomplete: null,
     cart_complete: null,
-    admin_profile: null
+    admin_profile: null,
+    category_product: null,
+    only_product:null
 }
 
 const reducer = (state, action) => {
@@ -32,6 +34,16 @@ const reducer = (state, action) => {
                 return {
                     ...state,
                     admin_profile: action.admin_profile
+                }
+        case "CATEGORY_PRODUCT":
+                return {
+                    ...state,
+                    category_product: action.category_product
+                }
+         case "ONLY_PRODUCT":
+                return {
+                    ...state,
+                    only_product: action.only_product
                 }
         default:
             return this.state;
