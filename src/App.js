@@ -20,10 +20,13 @@ import Admin_Profile from "./admin_components/Admin_Profile";
 import {Admin_Logout} from "./admin_components/Admin_Logout";
 import Add_Category from "./admin_components/Add_Category";
 import Only_Products from "./admin_components/Add_Product";
+import Admin_Product_Details from "./admin_components/Admin_Product_Details";
+import All_Orders from "./admin_components/All_Orders";
+import Order_Control from "./admin_components/Order_Control";
 
 const App = () =>{
     // console.log(userToken, " this is userToken")
-    const [{profile, page_reload, admin_profile, cart_incomplete, cart_complete, category_product, only_product}, dispatch] = useGlobalState()
+    const [{profile, page_reload, admin_profile, cart_incomplete, cart_complete, category_product, only_product, all_orders}, dispatch] = useGlobalState()
     // console.log(cart_complete, "#### cart complete ####")
     // console.log(cart_incomplete, "#### cart Incomplete ####")
     // console.log(profile, "$$$ User Profile")
@@ -77,7 +80,7 @@ const App = () =>{
                 url: `${domain}/api/cart/`,
                 headers: header
             }).then(response =>{
-                console.log(response.data, " CART");
+                // console.log(response.data, " CART");
                 {
                     const all_data = []
                     // eslint-disable-next-line array-callback-return
@@ -139,7 +142,7 @@ const App = () =>{
                 url: `${domain}/api/product/`,
                 headers: admin_header
             }).then(response =>{
-                console.log(response.data, " ONLY PRODUCTS ");
+                // console.log(response.data, " ONLY PRODUCTS ");
                 dispatch({
                      type: "ONLY_PRODUCT",
                      only_product: response.data
@@ -148,6 +151,8 @@ const App = () =>{
         }
         only_product()
     }, [dispatch, admin_profile]);
+
+
 
   return (
       <BrowserRouter>
@@ -162,6 +167,8 @@ const App = () =>{
                                 <Route exact path="/profile_role/admin_profile" component={Admin_Profile}/>
                                 <Route exact path="/admin_action/add_category" component={Add_Category}/>
                                 <Route exact path="/admin_action/add_product" component={Only_Products}/>
+                                <Route exact path="/admin_action/add_product/product_details/:id" component={Admin_Product_Details}/>
+                                <Route exact path="/order_page/all_order" component={All_Orders}/>
                                 <Route exact path="/admin_logout" component={Admin_Logout}/>
                           </Switch>
                       </>

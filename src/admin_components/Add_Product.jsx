@@ -3,6 +3,9 @@ import Axios from "axios";
 import {admin_header, domain} from "../env";
 import {useGlobalState} from "../state/provider";
 import Select from "react-select/base";
+import ProductDetails from "../components/ProductDetails";
+import {Link} from "react-router-dom";
+import SunEditor from "suneditor-react";
 
 const Only_Products = () => {
 
@@ -14,6 +17,7 @@ const Only_Products = () => {
     const [market_price, setMarket_price] = useState(null);
     const [sell_price, setSell_price] = useState(null);
     const [desc, setDesc] = useState(null);
+
 
     const add_product = async () => {
         const formdata = new FormData()
@@ -92,7 +96,7 @@ const Only_Products = () => {
                                     <td>{item.market_price}</td>
                                     <td>{item.selling_price}</td>
                                     <td>
-                                        <button className="btn btn-info">Details</button>
+                                        <Link to={`/admin_action/add_product/product_details/${item.id}`} target="_blank" className="btn btn-info">Details</Link>
                                     </td>
                                     <td>
                                         <button className="btn btn-danger">Delete</button>
@@ -135,7 +139,7 @@ const Only_Products = () => {
 
                     <div className="form-group my-3">
                         <label>Products Name</label>
-                        <input onChange={e => setProduct_name(e.target.value)} type="text" className="form-control" placeholder="Write Category Names"/>
+                        <input onChange={e => setProduct_name(e.target.value)} type="text" className="form-control" placeholder="Write Product Names"/>
                     </div>
 
                    <div className="form-group my-3">
@@ -168,7 +172,7 @@ const Only_Products = () => {
 
                      <div className="form-group my-3">
                         <label>Product Description:</label>
-                        <input onChange={(e) => setDesc(e.target.value)} type="text" className="form-control" placeholder="Write Product Description"/>
+                        <textarea onChange={(e) => setDesc(e.target.value)} className="form-control" placeholder="Write Product Description"/>
                     </div>
 
                     <button onClick={add_product} className="btn btn-primary my-2">Add To Product</button>

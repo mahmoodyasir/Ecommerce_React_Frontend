@@ -5,9 +5,9 @@ import Axios from "axios";
 import {domain, header} from "../env";
 
 const Order = () => {
-    const [{ cart_incomplete }, dispatch] = useGlobalState()
+    const [{ cart_incomplete, profile }, dispatch] = useGlobalState()
     const history =  useHistory()
-    const [email, setEmail] = useState(null);
+    const [email, setEmail] = useState(profile?.prouser?.email);
     const [address, setAddress] = useState(null);
     const [phone, setPhone] = useState(null);
 
@@ -56,7 +56,7 @@ const Order = () => {
                             cart_incomplete?.cartproduct?.map((item, i)=>(
                                 <tr key={i}>
                                     <td>{i+1}</td>
-                                    <td>{item.product[0].title}</td>
+                                    <td>{item.product[0]?.title}</td>
                                     <td>{item.price}</td>
                                     <td>{item.quantity}</td>
                                     <td>{item.subtotal}</td>
@@ -91,7 +91,7 @@ const Order = () => {
                         </div>
                         <div className="form-group">
                             <label>Email</label>
-                            <input onChange={(e) => setEmail(e.target.value)} type="text" className="form-control" placeholder="Email"/>
+                            <input onChange={(e) => setEmail(e.target.value)} type="text" className="form-control" placeholder="Email" value={email}/>
                         </div>
                         <button onClick={order} className="btn btn-success my-2">Order</button>
                     </div>

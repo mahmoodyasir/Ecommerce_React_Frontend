@@ -70,7 +70,7 @@ const OrderDetails = () => {
                         product?.map((item, i) => (
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{item.product[0].title}</td>
+                                <td>{item.product[0]?.title}</td>
                                 <td>{item.price}</td>
                                 <td>{item.quantity}</td>
                                 <td>{item.subtotal}</td>

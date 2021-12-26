@@ -54,7 +54,7 @@ const Oldorders = () => {
                             <td>{i+1}</td>
                             <td>{order?.total}</td>
                             <td>{order?.cartproduct?.length}</td>
-                            <td>{order?.order_status}</td>
+                            <td>{order?.order_list?.choice_name}</td>
                             <td>
                                 <Link to={`/orderdetails/${order?.id}`} className="btn btn-info">Details</Link>
                             </td>

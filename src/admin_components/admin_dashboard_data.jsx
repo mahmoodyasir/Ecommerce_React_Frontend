@@ -7,7 +7,7 @@ import * as RiIcons from 'react-icons/ri';
 export const SidebarData = [
     {
         title: 'Actions',
-        path: '/admin_action',
+        path: '#',
         icon: <AiIcons.AiFillHome/>,
         iconClosed: <RiIcons.RiArrowDownSFill/>,
         iconOpened: <RiIcons.RiArrowUpSFill/>,
@@ -26,20 +26,20 @@ export const SidebarData = [
     },
 
     {
-        title: 'Profile',
-        path: '/profile_role',
-        icon: <AiIcons.AiFillHome/>,
+        title: 'Orders',
+        path: '#',
+        icon: <AiIcons.AiFillPlusCircle/>,
         iconClosed: <RiIcons.RiArrowDownSFill/>,
         iconOpened: <RiIcons.RiArrowUpSFill/>,
         subNav: [
             {
-                title: 'Admin Profile',
-                path: '/profile_role/admin_profile',
+                title: 'All Orders',
+                path: '/order_page/all_order',
                 icon: <IoIcons.IoIosPaper/>
             },
             {
-                title: 'User Profile',
-                path: '/profile_role/user_profile',
+                title: 'Incomplete Orders',
+                path: '/order_page/incomplete_order',
                 icon: <IoIcons.IoIosPaper/>
             }
         ]
