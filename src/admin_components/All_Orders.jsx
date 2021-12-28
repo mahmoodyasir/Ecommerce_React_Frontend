@@ -3,7 +3,9 @@ import {useGlobalState} from "../state/provider";
 import Axios from "axios";
 import {admin_header, domain} from "../env";
 import Order_Control from "./Order_Control";
+import "./CSS/All_Order.css";
 import TableScrollbar from 'react-table-scrollbar';
+import User_Control_Admin from "./User_Control_Admin";
 
 const All_Orders = () => {
     const [{ admin_profile,all_order }, dispatch] = useGlobalState();
@@ -19,11 +21,12 @@ const All_Orders = () => {
                 url: `${domain}/api/all_order/`,
                 headers: admin_header
             }).then(response =>{
-                setOrder(response.data);
+                setOrder(response.data)
                 dispatch({
                     type: "ALL_ORDER",
                     all_order: response.data,
                 })
+
             })
         }
         all_orders()
@@ -32,7 +35,7 @@ const All_Orders = () => {
 
     return (
         <div>
-            {modal && <Order_Control setModal={setModal} order_id={order_id} order={order} />}
+            {modal && <Order_Control setModal={setModal} order_id={order_id} order={order}/>}
             {/*{order !== null && <Order_Control order={order}/>}*/}
             <div className="container">
                 <table className="table table-striped">

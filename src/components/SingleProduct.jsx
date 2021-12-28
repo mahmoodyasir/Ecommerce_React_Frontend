@@ -35,7 +35,7 @@ const SingleProduct = ({item}) => {
 
                 <div className="card-body">
                     <h5 className="card-title">{item.title}</h5>
-                    <p className="card-text">{(item.description).substring(0,100)}.... <Link to={`/product/${item.id}`}>see more</Link> </p>
+                    <p className="card-text">{(item.description).substring(0,100)}.... <Link to={`/product/${item.id}`} target="_blank">see more</Link> </p>
                     <button onClick={()=>addtocart(item.id)} className="btn btn-primary">Add to Cart</button>
                 </div>
             <div className="card-footer">

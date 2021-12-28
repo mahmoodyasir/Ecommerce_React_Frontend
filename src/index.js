@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from './reportWebVitals';
 import {Globalstate} from "./state/provider";
 import reducer, {initialstate} from "./state/reducer";
+import All_Orders from "./admin_components/All_Orders";
 
 ReactDOM.render(
     <Globalstate initialstate={initialstate} reducer={reducer}>

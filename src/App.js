@@ -23,10 +23,12 @@ import Only_Products from "./admin_components/Add_Product";
 import Admin_Product_Details from "./admin_components/Admin_Product_Details";
 import All_Orders from "./admin_components/All_Orders";
 import Order_Control from "./admin_components/Order_Control";
+import User_Control_Admin from "./admin_components/User_Control_Admin";
+import Admin_HomePage from "./admin_components/Admin_HomePage";
 
 const App = () =>{
     // console.log(userToken, " this is userToken")
-    const [{profile, page_reload, admin_profile, cart_incomplete, cart_complete, category_product, only_product, all_orders}, dispatch] = useGlobalState()
+    const [{profile, page_reload, admin_profile, cart_incomplete, cart_complete, category_product, only_product, all_order}, dispatch] = useGlobalState()
     // console.log(cart_complete, "#### cart complete ####")
     // console.log(cart_incomplete, "#### cart Incomplete ####")
     // console.log(profile, "$$$ User Profile")
@@ -164,10 +166,12 @@ const App = () =>{
                            {/*<Route exact path="/admin_dashboard" component={Admin_dashboard}/>*/}
                           <Admin_dashboard />
                           <Switch>
+                                <Route exact path="/" component={Admin_HomePage}/>
                                 <Route exact path="/profile_role/admin_profile" component={Admin_Profile}/>
                                 <Route exact path="/admin_action/add_category" component={Add_Category}/>
                                 <Route exact path="/admin_action/add_product" component={Only_Products}/>
                                 <Route exact path="/admin_action/add_product/product_details/:id" component={Admin_Product_Details}/>
+                                <Route exact path="/admin_action/user_control_admin/:id" component={User_Control_Admin}/>
                                 <Route exact path="/order_page/all_order" component={All_Orders}/>
                                 <Route exact path="/admin_logout" component={Admin_Logout}/>
                           </Switch>

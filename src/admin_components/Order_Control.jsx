@@ -4,10 +4,13 @@ import Axios from "axios";
 import {admin_header, domain} from "../env";
 import {useGlobalState} from "../state/provider";
 import All_Orders from "./All_Orders";
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
+import User_Control_Admin from "./User_Control_Admin";
 
 const Order_Control = ({ setModal, order_id, order, func }) => {
     const [{ admin_profile, all_order }, dispatch] = useGlobalState();
+
+    const [check, setCheck] = useState(false);
     const history =  useHistory()
     const [order_status, setOrder_status] = useState(null);
     const [get_order_status, setGet_order_status] = useState(order[order_id]?.order_list?.id);
@@ -30,7 +33,6 @@ const Order_Control = ({ setModal, order_id, order, func }) => {
                 headers: admin_header
             }).then(response => {
                 setOrder_status(response.data)
-                // console.log(response.data)
             })
         }
         get_choice()
@@ -57,9 +59,16 @@ const Order_Control = ({ setModal, order_id, order, func }) => {
         })
     }
 
+    const user_control = () => {
+        let newpageurl = `/admin_action/user_control_admin/${order[order_id]?.id}`;
+        window.open(newpageurl,"_blank");
+
+    }
+
 
     return (
         <div className="center">
+            {/*{check && <User_Control_Admin all_order={all_order}/>}*/}
           <div className="modalBackground">
       <div className="modalContainer">
         <div className="titleCloseBtn">
@@ -80,7 +89,10 @@ const Order_Control = ({ setModal, order_id, order, func }) => {
                  <h5 className="card-title">Order ID: {order[order_id]?.id}</h5>
             </div>
 
-            <div className="col-md-6 card text-white bg-primary mb-3 mx-2">
+                <div className="col-md-6 card text-white bg-primary mb-3 mx-2 btn" onClick={() => {
+                    // setCheck(true);
+                    user_control();
+                }}>
                  <h5 className="card-title">Username: {order[order_id]?.userdata['0']?.username}</h5>
             </div>
             </div>

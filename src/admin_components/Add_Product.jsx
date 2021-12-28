@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Axios from "axios";
-import {admin_header, domain} from "../env";
+import {admin_header, domain, header} from "../env";
 import {useGlobalState} from "../state/provider";
 import Select from "react-select/base";
 import ProductDetails from "../components/ProductDetails";
@@ -67,6 +67,22 @@ const Only_Products = () => {
         })
     }
 
+    const deleteproduct = async (id) => {
+        await Axios({
+            method: 'delete',
+            url: `${domain}/api/product_delete/${id}/`,
+            headers: admin_header
+        }).then(response => {
+            console.log(response.data)
+            alert("Product Deleted")
+            dispatch({
+                type: "ADMIN_PROFILE",
+                admin_profile: response.data
+            })
+
+        })
+    }
+
 
     return (
 
@@ -99,7 +115,7 @@ const Only_Products = () => {
                                         <Link to={`/admin_action/add_product/product_details/${item.id}`} target="_blank" className="btn btn-info">Details</Link>
                                     </td>
                                     <td>
-                                        <button className="btn btn-danger">Delete</button>
+                                        <button onClick={() => deleteproduct(item?.id)} className="btn btn-danger">Delete</button>
                                     </td>
                                 </tr>
                             ))

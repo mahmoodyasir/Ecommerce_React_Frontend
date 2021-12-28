@@ -16,6 +16,7 @@ const LoginPage = () => {
         }).then(response => {
             console.log(response.data['token']);
             window.localStorage.setItem("token", response.data['token'])
+            window.location.href = '/'
         }).catch(_=>{
             alert("Your username or password is incorrect !! Try Again ....")
         })
