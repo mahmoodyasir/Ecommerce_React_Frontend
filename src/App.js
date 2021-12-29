@@ -25,6 +25,7 @@ import All_Orders from "./admin_components/All_Orders";
 import Order_Control from "./admin_components/Order_Control";
 import User_Control_Admin from "./admin_components/User_Control_Admin";
 import Admin_HomePage from "./admin_components/Admin_HomePage";
+import All_Customer_Profile from "./admin_components/All_Customer_Profile";
 
 const App = () =>{
     // console.log(userToken, " this is userToken")
@@ -168,6 +169,7 @@ const App = () =>{
                           <Switch>
                                 <Route exact path="/" component={Admin_HomePage}/>
                                 <Route exact path="/profile_role/admin_profile" component={Admin_Profile}/>
+                                <Route exact path="/profile_role/all_customer_profile" component={All_Customer_Profile}/>
                                 <Route exact path="/admin_action/add_category" component={Add_Category}/>
                                 <Route exact path="/admin_action/add_product" component={Only_Products}/>
                                 <Route exact path="/admin_action/add_product/product_details/:id" component={Admin_Product_Details}/>

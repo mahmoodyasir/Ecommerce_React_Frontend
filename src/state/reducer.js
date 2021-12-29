@@ -7,6 +7,7 @@ export const initialstate = {
     category_product: null,
     only_product:null,
     all_order: null,
+    count_state:null,
 }
 
 const reducer = (state, action) => {
@@ -50,6 +51,11 @@ const reducer = (state, action) => {
                 return {
                     ...state,
                     all_order: action.all_order
+                }
+         case "COUNT_STATE":
+                return {
+                    ...state,
+                    count_state: action.count_state
                 }
 
         default:

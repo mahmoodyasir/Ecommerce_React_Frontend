@@ -18,7 +18,7 @@ const LoginPage = () => {
             window.localStorage.setItem("admin_token", response.data['admin_token'])
             let value = response.data['message']
             if (value === true){
-                window.location.href = '/admin_dashboard'
+                window.location.href = '/'
             }
             else {
                 alert("You are not a valid user !! ")

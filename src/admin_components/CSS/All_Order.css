@@ -72,6 +72,21 @@
   cursor: pointer;
 }
 
+.bg-purple{
+  background-color: purple;
+}
+
+.bg-indigo{
+  background-color: indigo;
+}
+
+.bg-teal{
+  background-color: teal;
+}
+
+.bg-orange{
+  background-color: orangered;
+}
 /*.center {*/
 /*  display: flex;*/
 /*  justify-content: center;*/

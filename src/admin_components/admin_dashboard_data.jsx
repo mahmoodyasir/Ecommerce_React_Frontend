@@ -6,9 +6,14 @@ import * as RiIcons from 'react-icons/ri';
 
 export const SidebarData = [
     {
+        title: 'Home',
+        path: '/',
+        icon: <AiIcons.AiFillHome/>
+    },
+    {
         title: 'Actions',
         path: '#',
-        icon: <AiIcons.AiFillHome/>,
+        icon: <AiIcons.AiFillTool/>,
         iconClosed: <RiIcons.RiArrowDownSFill/>,
         iconOpened: <RiIcons.RiArrowUpSFill/>,
         subNav: [
