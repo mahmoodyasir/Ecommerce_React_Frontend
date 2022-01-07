@@ -1,16 +1,38 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {useGlobalState} from "../state/provider";
+import * as GiIcon from "react-icons/gi";
+import '../admin_components/CSS/nav.css'
 
 const Navbar = () => {
     const [{profile, cart_incomplete}, dispatch] = useGlobalState()
-    let cart_product_length = 0
-    if (cart_incomplete !== null)
-    {
-        cart_product_length = cart_incomplete?.cartproduct?.length
+
+    const [toggleMenu, setToggleMenu] = useState(false)
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+
+
+    const toggleNav = () => {
+        setToggleMenu(!toggleMenu)
     }
-    else
-    {
+
+    useEffect(() => {
+
+        const changeWidth = () => {
+            setScreenWidth(window.innerWidth);
+        }
+
+        window.addEventListener('resize', changeWidth)
+
+        return () => {
+            window.removeEventListener('resize', changeWidth)
+        }
+
+    }, [])
+
+    let cart_product_length = 0
+    if (cart_incomplete !== null) {
+        cart_product_length = cart_incomplete?.cartproduct?.length
+    } else {
         cart_product_length = 0
     }
 
@@ -25,38 +47,45 @@ const Navbar = () => {
         window.location.href = '/'
     }
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <Link className="navbar-brand" to="/">Ecommerce </Link>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div className="navbar-nav">
-                    {
-                        profile !== null ?
-                            (
-                                <>
-                                    <Link className="nav-link" to="/cart">Cart({cart_product_length})</Link>
-                                    <Link className="nav-link" to="/profile">Profile</Link>
-                                    <Link onClick={logout} className="nav-link" to="">Logout</Link>
-                                </>
-                            )
-                            :
-                            (
-                                <>
-                                    <Link className="nav-link" to="/login">Login</Link>
-                                    <Link className="nav-link" to="/register">Registration</Link>
-                                </>
-                            )
-                    }
-
-
-
-                </div>
+        <div>
+            <div className="head">
+                <Link className="navbar-brand head_font" to="/">Ecommerce </Link>
             </div>
+
+
+            <nav className="flex-row">
+            {(toggleMenu || screenWidth > 600) && (
+                <div>
+                    <ul className="list">
+
+                        {
+                            profile !== null ?
+                                (
+                                    <>
+                                        <Link className="nav-link items" to="/cart">Cart({cart_product_length})</Link>
+                                        <Link className="nav-link items" to="/profile">Profile</Link>
+                                        <Link onClick={logout} className="nav-link items" to="">Logout</Link>
+                                    </>
+                                )
+                                :
+                                (
+                                    <>
+                                        <Link className="nav-link items" to="/login">Login</Link>
+                                        <Link className="nav-link items" to="/register">Registration</Link>
+                                    </>
+                                )
+                        }
+
+                    </ul>
+                </div>
+            )}
+
+            {screenWidth <= 600 ? (
+                <GiIcon.GiHamburgerMenu onClick={toggleNav} className="icon"/>
+            ) : ("")}
+
         </nav>
+        </div>
     )
 }
 

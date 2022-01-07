@@ -27,17 +27,25 @@ import User_Control_Admin from "./admin_components/User_Control_Admin";
 import Admin_HomePage from "./admin_components/Admin_HomePage";
 import All_Customer_Profile from "./admin_components/All_Customer_Profile";
 
-const App = () =>{
+const App = () => {
     // console.log(userToken, " this is userToken")
-    const [{profile, page_reload, admin_profile, cart_incomplete, cart_complete, category_product, only_product, all_order}, dispatch] = useGlobalState()
+    const [{
+        profile,
+        page_reload,
+        admin_profile,
+        cart_incomplete,
+        cart_complete,
+        category_product,
+        only_product,
+        all_order
+    }, dispatch] = useGlobalState()
     // console.log(cart_complete, "#### cart complete ####")
     // console.log(cart_incomplete, "#### cart Incomplete ####")
     // console.log(profile, "$$$ User Profile")
 
     useEffect(() => {
-        if (userToken !== null)
-        {
-            const getdata = async () =>{
+        if (userToken !== null) {
+            const getdata = async () => {
                 await Axios({
                     method: "get",
                     url: `${domain}/api/profile/`,
@@ -45,8 +53,8 @@ const App = () =>{
                 }).then(response => {
                     // console.log(response.data["data"], " $$$$$$$$ user profile data");
                     dispatch({
-                        type:"ADD_PROFILE",
-                        profile:response.data["data"]
+                        type: "ADD_PROFILE",
+                        profile: response.data["data"]
                     })
                 })
             }
@@ -55,8 +63,7 @@ const App = () =>{
     }, [dispatch, page_reload]);
 
     useEffect(() => {
-        if (adminToken !== null)
-        {
+        if (adminToken !== null) {
             const getadmindata = async () => {
                 await Axios({
                     method: "get",
@@ -82,22 +89,19 @@ const App = () =>{
                 method: "get",
                 url: `${domain}/api/cart/`,
                 headers: header
-            }).then(response =>{
+            }).then(response => {
                 // console.log(response.data, " CART");
                 {
                     const all_data = []
                     // eslint-disable-next-line array-callback-return
                     response?.data.map(data => {
-                        if (data.complete)
-                        {
+                        if (data.complete) {
                             all_data.push(data)
                             dispatch({
                                 type: "ADD_CARTCOMPLETE",
                                 cart_complete: all_data
                             })
-                        }
-                        else
-                        {
+                        } else {
                             dispatch({
                                 type: "ADD_CARTINCOMPLETE",
                                 cart_incomplete: data
@@ -117,18 +121,18 @@ const App = () =>{
                 method: "get",
                 url: `${domain}/api/category/`,
                 headers: admin_header
-            }).then(response =>{
+            }).then(response => {
                 // console.log(response.data, " CATEGORY ");
                 {
                     const category_data = []
                     // eslint-disable-next-line array-callback-return
                     response?.data.map(data => {
 
-                    category_data.push(data)
-                    dispatch({
-                           type: "CATEGORY_PRODUCT",
-                           category_product: category_data
-                         })
+                        category_data.push(data)
+                        dispatch({
+                            type: "CATEGORY_PRODUCT",
+                            category_product: category_data
+                        })
 
                     })
                 }
@@ -139,16 +143,16 @@ const App = () =>{
 
 
     useEffect(() => {
-        const  only_product = async () => {
+        const only_product = async () => {
             await Axios({
                 method: "get",
                 url: `${domain}/api/product/`,
                 headers: admin_header
-            }).then(response =>{
+            }).then(response => {
                 // console.log(response.data, " ONLY PRODUCTS ");
                 dispatch({
-                     type: "ONLY_PRODUCT",
-                     only_product: response.data
+                    type: "ONLY_PRODUCT",
+                    only_product: response.data
                 })
             })
         }
@@ -156,64 +160,74 @@ const App = () =>{
     }, [dispatch, admin_profile]);
 
 
+    return (
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/admin_login" component={admin_login}/>
+                {
+                    admin_profile !== null ? (
+                            <>
+                                {/*<Route exact path="/admin_dashboard" component={Admin_dashboard}/>*/}
+                                <Admin_dashboard/>
+                                <Switch>
+                                    <Route exact path="/" component={Admin_HomePage}/>
+                                    <Route exact path="/profile_role/admin_profile" component={Admin_Profile}/>
+                                    <Route exact path="/profile_role/all_customer_profile"
+                                           component={All_Customer_Profile}/>
+                                    <Route exact path="/admin_action/add_category" component={Add_Category}/>
+                                    <Route exact path="/admin_action/add_product" component={Only_Products}/>
+                                    <Route exact path="/admin_action/add_product/product_details/:id"
+                                           component={Admin_Product_Details}/>
+                                    <Route exact path="/admin_action/user_control_admin/:id"
+                                           component={User_Control_Admin}/>
+                                    <Route exact path="/order_page/all_order" component={All_Orders}/>
+                                    <Route exact path="/admin_logout" component={Admin_Logout}/>
+                                </Switch>
+                            </>
+                        ) :
+                        ("")
+                }
+                {
+                    profile !== null ? (
+                            <>
+                                <Navbar/>
+                                <div className="mb-5"></div>
+                                <Switch>
+                                    <Route exact path="/profile" component={ProfilePage}/>
+                                    <Route exact path="/cart" component={Cart}/>
+                                    <Route exact path="/oldorders" component={Oldorders}/>
+                                    <Route exact path="/order" component={Order}/>
+                                    <Route exact path="/orderdetails/:id" component={OrderDetails}/>
 
-  return (
-      <BrowserRouter>
-          <Switch>
-              <Route exact path="/admin_login" component={admin_login}/>
-              {
-                  admin_profile !== null ? (
-                      <>
-                           {/*<Route exact path="/admin_dashboard" component={Admin_dashboard}/>*/}
-                          <Admin_dashboard />
-                          <Switch>
-                                <Route exact path="/" component={Admin_HomePage}/>
-                                <Route exact path="/profile_role/admin_profile" component={Admin_Profile}/>
-                                <Route exact path="/profile_role/all_customer_profile" component={All_Customer_Profile}/>
-                                <Route exact path="/admin_action/add_category" component={Add_Category}/>
-                                <Route exact path="/admin_action/add_product" component={Only_Products}/>
-                                <Route exact path="/admin_action/add_product/product_details/:id" component={Admin_Product_Details}/>
-                                <Route exact path="/admin_action/user_control_admin/:id" component={User_Control_Admin}/>
-                                <Route exact path="/order_page/all_order" component={All_Orders}/>
-                                <Route exact path="/admin_logout" component={Admin_Logout}/>
-                          </Switch>
-                      </>
-                  ):
-                      ("")
-              }
-              {
-                  profile !== null ? (
-                      <>
-                          <Navbar/>
-                          <Route exact path="/profile" component={ProfilePage} />
-                          <Route exact path="/cart" component={Cart} />
-                          <Route exact path="/oldorders" component={Oldorders} />
-                          <Route exact path="/order" component={Order} />
-                          <Route exact path="/orderdetails/:id" component={OrderDetails} />
+                                    <Route exact path="/" component={HomePage}/>
+                                    <Route exact path="/product/:id" component={ProductDetails}/>
+                                    <Route exact path="/category/:id" component={CategoryProducts}/>
+                                </Switch>
 
-                          <Route exact path="/" component={HomePage}/>
-                          <Route exact path="/product/:id" component={ProductDetails}/>
-                          <Route exact path="/category/:id" component={CategoryProducts}/>
-                      </>
-                  ):
-                      (
-                          <>
-                              <Navbar/>
-                              <Route exact path="/login" component={LoginPage} />
-                              <Route exact path="/register" component={RegisterPage} />
+                            </>
+                        ) :
+                        (
+                            <>
+                                <Navbar/>
+                                <div className="mb-5"></div>
+                                <Switch>
+                                    <Route exact path="/login" component={LoginPage}/>
+                                    <Route exact path="/register" component={RegisterPage}/>
 
-                              <Route exact path="/" component={HomePage}/>
-                              <Route exact path="/product/:id" component={ProductDetails}/>
-                              <Route exact path="/category/:id" component={CategoryProducts}/>
-                          </>
-                      )
+                                    <Route exact path="/" component={HomePage}/>
+                                    <Route exact path="/product/:id" component={ProductDetails}/>
+                                    <Route exact path="/category/:id" component={CategoryProducts}/>
+                                </Switch>
 
-              }
+                            </>
+                        )
 
-              <Route exact component={HomePage}/>
-          </Switch>
-      </BrowserRouter>
-  )
+                }
+
+                <Route exact component={HomePage}/>
+            </Switch>
+        </BrowserRouter>
+    )
 }
 
 export default App;

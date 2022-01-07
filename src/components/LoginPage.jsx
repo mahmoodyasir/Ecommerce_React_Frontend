@@ -24,7 +24,7 @@ const LoginPage = () => {
     return (
 
         <div className="container mt-4 col-md-4">
-            <h1>Login Page</h1>
+            <h1 className="display-6">Login Page</h1>
             <div className="form-group">
                 <label >Username</label>
                 <input onChange={(e) => setUsername(e.target.value)} type="text" className="form-control"  placeholder="Username" />

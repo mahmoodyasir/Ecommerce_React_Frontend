@@ -34,9 +34,9 @@ const SingleProduct = ({item}) => {
             </Link>
 
                 <div className="card-body">
-                    <h5 className="card-title">{item.title}</h5>
-                    <p className="card-text">{(item.description).substring(0,100)}.... <Link to={`/product/${item.id}`} target="_blank">see more</Link> </p>
-                    <button onClick={()=>addtocart(item.id)} className="btn btn-primary">Add to Cart</button>
+                    <h5 className="card-title display-6">{item.title}</h5>
+                    <p className="card-text text-capitalize text-break">{(item.description).substring(0,100)}.... <Link to={`/product/${item.id}`} target="_blank">see more</Link> </p>
+                    <button onClick={()=>addtocart(item.id)} className="btn bg-purple text-white rounded-pill">Add to Cart</button>
                 </div>
             <div className="card-footer">
                 <h5>price: <del>{item.market_price}$</del> {item.selling_price}$</h5>

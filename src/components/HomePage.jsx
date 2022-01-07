@@ -3,6 +3,8 @@ import Axios from "axios";
 import {domain} from "../env";
 import SingleProduct from "./SingleProduct";
 import {Link} from "react-router-dom";
+import "../admin_components/CSS/All_Order.css"
+import './css/home.css'
 
 const HomePage = () => {
     const [products, setProducts] = useState(null);
@@ -52,7 +54,7 @@ const HomePage = () => {
     }
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid index">
             <div className="row">
                 <div className="col-md-9">
                     <div className="row">
@@ -68,9 +70,9 @@ const HomePage = () => {
                         <div>
                             {
                                 products?.previous !== null ? (
-                                    <button onClick={previous_products} className="btn btn-danger">Previous</button>
+                                    <button onClick={previous_products} className="btn btn-outline-danger">Previous</button>
                                 ):(
-                                    <button className="btn btn-danger" disabled>Previous</button>
+                                    <button className="btn btn-outline-danger" disabled>Previous</button>
                                 )
                             }
 
@@ -78,9 +80,9 @@ const HomePage = () => {
                         <div>
                             {
                                 products?.next !== null ? (
-                                     <button onClick={next_products} className="btn btn-success">Next</button>
+                                     <button onClick={next_products} className="btn btn-outline-success">Next</button>
                                 ):(
-                                     <button className="btn btn-success" disabled>Next</button>
+                                     <button className="btn btn-outline-success" disabled>Next</button>
                                 )
                             }
 
@@ -88,13 +90,13 @@ const HomePage = () => {
                     </div>
                     </div>
                 </div>
-                <div className="col-md-3">
-                    <h1>All Categories</h1>
+                <div className="col-md-3 padding text-center">
+                    <h1 className="display-5">All Categories</h1>
                     {
                         category !== null &&
                             category?.map((category, i)=>(
                                 <div key={i} className="my-2">
-                                    <Link to={`/category/${category.id}`} className="btn btn-success">{category?.title}</Link>
+                                    <Link to={`/category/${category.id}`} className="btn btn-outline-info">{category?.title}</Link>
                                 </div>
                             ))
                     }

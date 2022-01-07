@@ -32,7 +32,7 @@ const RegisterPage = () => {
     }
     return (
         <div className="container">
-            <h1>Registration</h1>
+            <h1 className="display-6">Registration</h1>
             <div className="form-group">
                 <label>Username</label>
                 <input onChange={(e) => setUsername(e.target.value)} type="text" className="form-control" placeholder="Username"/>
