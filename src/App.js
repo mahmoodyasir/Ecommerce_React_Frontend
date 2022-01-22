@@ -16,7 +16,6 @@ import Order from "./components/Order";
 import OrderDetails from "./components/OrderDetails";
 import admin_login from "./admin_components/admin_login";
 import Admin_dashboard from "./admin_components/admin_dashboard";
-import Admin_Profile from "./admin_components/Admin_Profile";
 import {Admin_Logout} from "./admin_components/Admin_Logout";
 import Add_Category from "./admin_components/Add_Category";
 import Only_Products from "./admin_components/Add_Product";
@@ -26,6 +25,9 @@ import Order_Control from "./admin_components/Order_Control";
 import User_Control_Admin from "./admin_components/User_Control_Admin";
 import Admin_HomePage from "./admin_components/Admin_HomePage";
 import All_Customer_Profile from "./admin_components/All_Customer_Profile";
+import Admin_User from "./admin_components/Admin_User";
+import Single_Customer_Profile from "./admin_components/Single_Customer_Profile";
+import Incomplete_Orders from "./admin_components/Incomplete_Orders";
 
 const App = () => {
     // console.log(userToken, " this is userToken")
@@ -171,9 +173,6 @@ const App = () => {
                                 <Admin_dashboard/>
                                 <Switch>
                                     <Route exact path="/" component={Admin_HomePage}/>
-                                    <Route exact path="/profile_role/admin_profile" component={Admin_Profile}/>
-                                    <Route exact path="/profile_role/all_customer_profile"
-                                           component={All_Customer_Profile}/>
                                     <Route exact path="/admin_action/add_category" component={Add_Category}/>
                                     <Route exact path="/admin_action/add_product" component={Only_Products}/>
                                     <Route exact path="/admin_action/add_product/product_details/:id"
@@ -182,6 +181,10 @@ const App = () => {
                                            component={User_Control_Admin}/>
                                     <Route exact path="/order_page/all_order" component={All_Orders}/>
                                     <Route exact path="/admin_logout" component={Admin_Logout}/>
+                                    <Route exact path="/admin_user" component={Admin_User} />
+                                    <Route exact path="/profile" component={ProfilePage}/>
+                                    <Route exact path="/customers" component={All_Customer_Profile}/>
+                                    <Route exact path="/order_page/incomplete_order" component={Incomplete_Orders}/>
                                 </Switch>
                             </>
                         ) :

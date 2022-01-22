@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 import * as FaIcons from 'react-icons/fa';
@@ -6,6 +6,10 @@ import * as AiIcons from 'react-icons/ai';
 import {SidebarData} from "./admin_dashboard_data";
 import SubMenu from "./admin_dashboard_submenu";
 import {IconContext} from "react-icons";
+import {useGlobalState} from "../state/provider";
+import {admin_header, domain} from "../env";
+import '../admin_components/CSS/All_Order.css'
+import Axios from "axios";
 
 
 const Nav = styled.div`
@@ -43,9 +47,33 @@ const SidebarWrap = styled.div`
 `;
 
 const Admin_dashboard = () => {
+    const [{ page_reload }, dispatch] = useGlobalState();
     const [sidebar, setSidebar] = useState(false);
+    const [profile, setProfile] = useState(null);
 
     const showSidebar = () => setSidebar(!sidebar)
+
+
+
+        useEffect(() => {
+            const getadmindata = async () => {
+                await Axios({
+                        method: "get",
+                        url: `${domain}/api/admin_profile/`,
+                        headers: admin_header
+                    }).then(response => {
+                        setProfile(response.data["data"])
+                        // console.log(response.data)
+                        // dispatch({
+                        //     type: "ADMIN_PROFILE",
+                        //     admin_profile: response.data["data"]
+                        // })
+                    })
+                }
+                getadmindata()
+        }, [page_reload]);
+
+
 
     return(
        <>
@@ -60,6 +88,12 @@ const Admin_dashboard = () => {
                    <NavIcon to="#">
                        <AiIcons.AiOutlineClose onClick={showSidebar} />
                    </NavIcon>
+
+                    <div className="mb-4">
+                        <img src={`${domain}${profile?.image}`} className="rounded-circle account-image" />
+                        <Link className="nav-link" to="/profile" target="_blank"><button className="btn link-hover text-white btn-info">Username: {profile?.prouser?.username}</button></Link>
+                    </div>
+
                    {SidebarData.map((item, index) => {
                        return <SubMenu item={item} key={index} />;
                    })}

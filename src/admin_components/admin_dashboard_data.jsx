@@ -3,6 +3,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 import * as RiIcons from 'react-icons/ri';
+import {useGlobalState} from "../state/provider";
 
 export const SidebarData = [
     {
@@ -48,6 +49,11 @@ export const SidebarData = [
                 icon: <IoIcons.IoIosPaper/>
             }
         ]
+    },
+    {
+        title: 'Create Admin User',
+        path: '/admin_user',
+        icon: <FaIcons.FaUserPlus/>
     },
     {
         title: 'Logout',

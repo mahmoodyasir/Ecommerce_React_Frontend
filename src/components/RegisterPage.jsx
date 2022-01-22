@@ -10,7 +10,7 @@ const RegisterPage = () => {
     const history = useHistory()
 
     const registernewuser = async () => {
-        if (password != confirmpassword)
+        if (password !== confirmpassword)
         {
             alert("Password not matched !! Try Again .... ")
         }

@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
+import {useGlobalState} from "../state/provider";
+import {domain} from "../env";
 
 const SidebarLink = styled(Link)`
     display: flex;
@@ -48,6 +50,7 @@ const SubMenu = ({item}) => {
     return (
         <>
             <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
+
                 <div>
                     {item.icon}
                     <SidebarLabel>{item.title}</SidebarLabel>

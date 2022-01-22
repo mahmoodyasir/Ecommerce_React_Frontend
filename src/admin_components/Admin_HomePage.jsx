@@ -84,7 +84,7 @@ const AdminHomePage = () => {
                     <div className="col-md-8">
                         <div className="card-body">
                             <h5 className="card-title bg-danger text-white rounded beside display-6">Total Customer: {obj?.users?.length}</h5>
-                            <Link className="card-text btn rounded bg-indigo text-white" to="/profile_role/all_customer_profile" target="_blank">See Customers</Link>
+                            <Link className="card-text btn rounded bg-indigo text-white" to="/customers" target="_blank">See Customers</Link>
 
                         </div>
                     </div>

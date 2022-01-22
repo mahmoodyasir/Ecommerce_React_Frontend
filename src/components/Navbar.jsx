@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {useGlobalState} from "../state/provider";
 import * as GiIcon from "react-icons/gi";
-import '../admin_components/CSS/nav.css'
+import '../components/css/nav.css'
 
 const Navbar = () => {
     const [{profile, cart_incomplete}, dispatch] = useGlobalState()
@@ -49,7 +49,7 @@ const Navbar = () => {
     return (
         <div>
             <div className="head">
-                <Link className="navbar-brand head_font" to="/">Ecommerce </Link>
+                <Link className="navbar-brand head_font" to="/">Mobile Shop </Link>
             </div>
 
 

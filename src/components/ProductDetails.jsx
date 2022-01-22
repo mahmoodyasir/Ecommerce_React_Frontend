@@ -63,7 +63,7 @@ const ProductDetails = () => {
                         <div className="row">
                             <div className="image_resize">
                                 {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-                            <img src={product?.image} alt="Card image cap"/>
+                            <img className="mt-4" src={product?.image} alt="Card image cap"/>
                             </div>
 
                             <div className="col-md-7">
