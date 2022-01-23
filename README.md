@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# Live Server Link and Backend Code Git Link Is Given Below: 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+LIVE SERVER [CLICK HERE](https://bdmobileshop.netlify.app/).
+
+BACKEND CODE [CLICK HERE](https://github.com/mahmoodyasir/Ecommerce_django_backend).
+
+ADMIN PANEL LINK and USERNAME & PASSWORD Is Provided in CV/RESUME. (I didn't attached it here for security purpose).
 
 ## Available Scripts
 
