@@ -37,7 +37,7 @@ const Admin_Product_Details = () => {
                     </div>
 
                     <div className="col-md-4 card border-primary my-4 mb-3">
-                        <div className="card-header">Product Title</div>
+                        <div className="card-header">Product Description</div>
                         <div className="card-body text-primary">
                             <h5 className="card-title display-6 my-2">{product?.title}</h5>
                             <p className="card-text">{product?.description}</p>
