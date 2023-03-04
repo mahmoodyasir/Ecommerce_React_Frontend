@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 
 
-export const domain = "https://mobileshopdjango.herokuapp.com";
+export const domain = "http://localhost:8000";
 export const userToken = window.localStorage.getItem("token")
 export const adminToken = window.localStorage.getItem("admin_token")
 

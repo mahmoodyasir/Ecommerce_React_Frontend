@@ -61,7 +61,7 @@ const HomePage = () => {
                         {
                         products !== null &&
                             products?.results.map((item,i)=>(
-                                <div key={i} className="col-md-4 my-2">
+                                <div key={i} className="col-md-3 my-2">
                                     <SingleProduct item={item}/>
                                 </div>
                             ))

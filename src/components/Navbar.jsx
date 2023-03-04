@@ -5,29 +5,7 @@ import * as GiIcon from "react-icons/gi";
 import '../components/css/nav.css'
 
 const Navbar = () => {
-    const [{profile, cart_incomplete}, dispatch] = useGlobalState()
-
-    const [toggleMenu, setToggleMenu] = useState(false)
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth)
-
-
-    const toggleNav = () => {
-        setToggleMenu(!toggleMenu)
-    }
-
-    useEffect(() => {
-
-        const changeWidth = () => {
-            setScreenWidth(window.innerWidth);
-        }
-
-        window.addEventListener('resize', changeWidth)
-
-        return () => {
-            window.removeEventListener('resize', changeWidth)
-        }
-
-    }, [])
+    const [{profile, cart_incomplete}, dispatch] = useGlobalState();
 
     let cart_product_length = 0
     if (cart_incomplete !== null) {
@@ -48,43 +26,53 @@ const Navbar = () => {
     }
     return (
         <div>
-            <div className="head">
-                <Link className="navbar-brand head_font" to="/">Mobile Shop </Link>
-            </div>
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <div className="container-fluid">
+                    <Link className="navbar-brand" to="/">Navbar</Link>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
-
-            <nav className="flex-row">
-            {(toggleMenu || screenWidth > 600) && (
-                <div>
-                    <ul className="list">
-
-                        {
-                            profile !== null ?
-                                (
+                            {
+                                profile !== null ?
                                     <>
-                                        <Link className="nav-link items" to="/cart">Cart({cart_product_length})</Link>
-                                        <Link className="nav-link items" to="/profile">Profile</Link>
-                                        <Link onClick={logout} className="nav-link items" to="">Logout</Link>
+                                        <li className="nav-item">
+                                            <Link className="nav-link items"
+                                                  to="/cart">Cart({cart_product_length})</Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link className="nav-link items" to="/profile">Profile</Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link onClick={logout} className="nav-link items" to="">Logout</Link>
+                                        </li>
                                     </>
-                                )
-                                :
-                                (
+                                    :
                                     <>
-                                        <Link className="nav-link items" to="/login">Login</Link>
-                                        <Link className="nav-link items" to="/register">Registration</Link>
+                                        <li className="nav-item">
+                                            <Link className="nav-link items" to="/login">Login</Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link className="nav-link items" to="/register">Registration</Link>
+                                        </li>
                                     </>
-                                )
-                        }
+                            }
 
-                    </ul>
+                        </ul>
+                        <form>
+                            <div className="d-flex input-group input-group-lg">
+                                <input className="form-control me-2 border-info " type="search" placeholder="Search"
+                                       aria-label="Search"/>
+                                <button className="btn btn-outline-success" type="submit">Search</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            )}
-
-            {screenWidth <= 600 ? (
-                <GiIcon.GiHamburgerMenu onClick={toggleNav} className="icon"/>
-            ) : ("")}
-
-        </nav>
+            </nav>
         </div>
     )
 }
