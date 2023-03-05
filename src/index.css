@@ -46,3 +46,12 @@ code {
   margin: 20px;
 }
 
+.carousel-height{
+  border-radius: 10px;
+}
+
+.category-product:hover{
+  background-color: rgba(173, 65, 231, 0.8);
+  color: white;
+  transition: 0.5s;
+}

@@ -26,7 +26,7 @@ const Navbar = () => {
     }
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light sticky">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/">Mobile Shop</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse"

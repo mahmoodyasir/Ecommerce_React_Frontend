@@ -194,7 +194,7 @@ const App = () => {
                     profile !== null ? (
                             <>
                                 <Navbar/>
-                                <div className="mb-5"></div>
+
                                 <Switch>
                                     <Route exact path="/profile" component={ProfilePage}/>
                                     <Route exact path="/cart" component={Cart}/>

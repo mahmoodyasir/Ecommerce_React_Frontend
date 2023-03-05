@@ -5,24 +5,26 @@ import SingleProduct from "./SingleProduct";
 import {Link} from "react-router-dom";
 import "../admin_components/CSS/All_Order.css"
 import './css/home.css'
+import CarouselBar from "./Carousel";
+import Category from "./Category";
 
 const HomePage = () => {
     const [products, setProducts] = useState(null);
     const [category, setCategory] = useState(null);
-    useEffect(()=>{
-        const getdata=async () =>{
+    useEffect(() => {
+        const getdata = async () => {
             await Axios({
-                method:"get",
-                url:`${domain}/api/product/`
+                method: "get",
+                url: `${domain}/api/product/`
             }).then(response => {
                 // console.log(response.data);
                 setProducts(response.data)
             })
         }
         getdata()
-    },[])
-    useEffect(()=>{
-        const getCategories = async () =>{
+    }, [])
+    useEffect(() => {
+        const getCategories = async () => {
             await Axios({
                 method: "get",
                 url: `${domain}/api/category/`
@@ -32,75 +34,100 @@ const HomePage = () => {
             })
         }
         getCategories()
-    },[])
-    const next_products=async () =>{
+    }, [])
+    const next_products = async () => {
         await Axios({
             method: "get",
             url: products?.next
-        }).then(response=>{
+        }).then(response => {
             console.log(response.data);
             setProducts(response.data)
         })
     }
 
-    const previous_products=async () =>{
+    const previous_products = async () => {
         await Axios({
             method: "get",
             url: products?.previous
-        }).then(response=>{
+        }).then(response => {
             console.log(response.data)
             setProducts(response.data)
         })
     }
 
     return (
-        <div className="container-fluid index">
-            <div className="row">
-                <div className="col-md-9">
+        <div className="container index">
+            <div className="w-100 mb-5">
+                <CarouselBar/>
+            </div>
+
+            <div className="row mb-5">
+                <h1 className="display-6 text-center mb-5">All Brand Category</h1>
+                <div className="col-md-12">
                     <div className="row">
                         {
-                        products !== null &&
-                            products?.results.map((item,i)=>(
+                        category !== null &&
+                            category?.map((category, i)=>(
                                 <div key={i} className="col-md-6 col-lg-4 my-2">
+                                    {/*<Link to={`/category/${category.id}`} className="btn btn-outline-info">{category?.title}</Link>*/}
+                                    <Category category={category}/>
+                                </div>
+                            ))
+                    }
+                    </div>
+                </div>
+            </div>
+
+            <div className="row">
+                <h1 className="display-6 text-center mb-5">All Products</h1>
+                <div className="col-md-12">
+                    <div className="row">
+                        {
+                            products !== null &&
+                            products?.results.map((item, i) => (
+                                <div key={i} className="col-md-6 col-lg-3 my-2">
                                     <SingleProduct item={item}/>
                                 </div>
                             ))
-                    }
-                    <div className="homepage__pagination">
-                        <div>
-                            {
-                                products?.previous !== null ? (
-                                    <button onClick={previous_products} className="btn btn-outline-danger">Previous</button>
-                                ):(
-                                    <button className="btn btn-outline-danger" disabled>Previous</button>
-                                )
-                            }
+                        }
+                        <div className="homepage__pagination">
+                            <div>
+                                {
+                                    products?.previous !== null ? (
+                                        <button onClick={previous_products}
+                                                className="btn btn-outline-danger">Previous</button>
+                                    ) : (
+                                        <button className="btn btn-outline-danger" disabled>Previous</button>
+                                    )
+                                }
 
-                        </div>
-                        <div>
-                            {
-                                products?.next !== null ? (
-                                     <button onClick={next_products} className="btn btn-outline-success">Next</button>
-                                ):(
-                                     <button className="btn btn-outline-success" disabled>Next</button>
-                                )
-                            }
+                            </div>
+                            <div>
+                                {
+                                    products?.next !== null ? (
+                                        <button onClick={next_products}
+                                                className="btn btn-outline-success">Next</button>
+                                    ) : (
+                                        <button className="btn btn-outline-success" disabled>Next</button>
+                                    )
+                                }
 
+                            </div>
                         </div>
                     </div>
-                    </div>
                 </div>
-                <div className="col-md-3 padding text-center">
-                    <h1 className="display-5">All Categories</h1>
-                    {
-                        category !== null &&
-                            category?.map((category, i)=>(
-                                <div key={i} className="my-2">
-                                    <Link to={`/category/${category.id}`} className="btn btn-outline-info">{category?.title}</Link>
-                                </div>
-                            ))
-                    }
-                </div>
+
+                {/*<div className="col-md-3 padding text-center">*/}
+                {/*    <h1 className="display-5">All Categories</h1>*/}
+                {/*    {*/}
+                {/*        category !== null &&*/}
+                {/*            category?.map((category, i)=>(*/}
+                {/*                <div key={i} className="my-2">*/}
+                {/*                    <Link to={`/category/${category.id}`} className="btn btn-outline-info">{category?.title}</Link>*/}
+                {/*                </div>*/}
+                {/*            ))*/}
+                {/*    }*/}
+                {/*</div>*/}
             </div>
         </div>
     )

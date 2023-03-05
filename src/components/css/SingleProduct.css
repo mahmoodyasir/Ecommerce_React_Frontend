@@ -5,3 +5,8 @@
     padding: 10px 6px 5px 6px;
     margin-top: -5%;
 }
+
+.title-size{
+    font-size: 160%;
+    text-shadow: orangered;
+}

@@ -8,7 +8,6 @@ import "./css/SingleProduct.css"
 import {useGlobalState} from "../state/provider";
 
 const SingleProduct = ({item}) => {
-    console.log(item)
     const [{profile}, dispatch] = useGlobalState()
     const history = useHistory()
     const addtocart = async (id) => {
@@ -46,7 +45,7 @@ const SingleProduct = ({item}) => {
                 </div>
 
                 <div className="card-body">
-                    <h5 className="card-title display-6">{item.title}</h5>
+                    <h5 className="card-title display-6 title-size">{item.title}</h5>
                     <h5>Price: <span className="badge bg-warning text-dark me-2"><del>{item.market_price}$</del></span><span
                         className="badge bg-success fs-5">{item.selling_price}$</span></h5>
                     {/*<p className="card-text text-capitalize text-break">{(item.description).substring(0, 100)}.... <Link*/}
@@ -57,7 +56,7 @@ const SingleProduct = ({item}) => {
                         <span><ImHeart className="fs-4"/> Wishlist</span>
                     </button>
                     <button style={{borderBottomRightRadius:"6px"}} onClick={() => addtocart(item.id)} className="border-0 py-2 w-50 bg-purple text-white ">
-                        <span className="nowrap"><BsCart4 className="fs-4"/> Add to Cart</span>
+                        <span className=""><BsCart4 className="fs-4"/> Add to Cart</span>
                     </button>
                 </div>
             </div>
