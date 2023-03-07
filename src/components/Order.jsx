@@ -5,14 +5,29 @@ import Axios from "axios";
 import {domain, header} from "../env";
 
 const Order = () => {
-    const [{ cart_incomplete, profile }, dispatch] = useGlobalState()
-    const history =  useHistory()
+    const [{cart_incomplete, profile}, dispatch] = useGlobalState()
+    const history = useHistory()
     const [email, setEmail] = useState(profile?.prouser?.email);
     const [address, setAddress] = useState(null);
     const [phone, setPhone] = useState(null);
+    let quantity = 0;
+    console.log(cart_incomplete)
+    console.log(profile?.prouser?.first_name)
+
+    for(let i=0; i<cart_incomplete?.cartproduct?.length; i++)
+    {
+        quantity = quantity + (cart_incomplete?.cartproduct[i]?.quantity);
+    }
+    console.log(quantity)
 
     const order = async () => {
-        await Axios({
+        if(email === null || phone === null || address === null)
+        {
+            alert("Please Provide All Fields !! ")
+        }
+        else
+        {
+            await Axios({
             method: "post",
             url: `${domain}/api/orders/`,
             headers: header,
@@ -35,27 +50,47 @@ const Order = () => {
             alert("Your order has been placed")
             history.push("/oldorders")
         })
+        }
     }
+
+    const onlineOrder = async () => {
+        if(email === null || phone === null || address === null)
+        {
+            alert("Please Provide All Fields !! ")
+        }
+        else
+        {
+            const formdata = new FormData()
+            formdata.append("email", email);
+            formdata.append("name", profile?.prouser?.first_name + " " + profile?.prouser?.last_name);
+            formdata.append("cartId", cart_incomplete?.id);
+            formdata.append("mobile", phone);
+            formdata.append("address", address);
+            formdata.append("quantity", quantity);
+            formdata.append("total", cart_incomplete?.total);
+        }
+    }
+
     return (
         <div className="container">
             <div className="row">
                 <div className="col-md-6">
                     <table className="table table-striped">
                         <thead>
-                            <tr>
-                                <th>SN</th>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Subtotal</th>
-                            </tr>
+                        <tr>
+                            <th>SN</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                        </tr>
                         </thead>
 
                         <tbody>
                         {
-                            cart_incomplete?.cartproduct?.map((item, i)=>(
+                            cart_incomplete?.cartproduct?.map((item, i) => (
                                 <tr key={i}>
-                                    <td>{i+1}</td>
+                                    <td>{i + 1}</td>
                                     <td>{item.product[0]?.title}</td>
                                     <td>{item.price}</td>
                                     <td>{item.quantity}</td>
@@ -66,13 +101,13 @@ const Order = () => {
                         </tbody>
 
                         <tfoot>
-                            <tr>
-                                <td>
-                                    <Link to="/cart" className="btn btn-success">Edit Cart</Link>
-                                </td>
-                                <td colSpan="3">Total: </td>
-                                <td>{cart_incomplete?.total}</td>
-                            </tr>
+                        <tr>
+                            <td>
+                                <Link to="/cart" className="btn btn-success">Edit Cart</Link>
+                            </td>
+                            <td colSpan="3">Total:</td>
+                            <td>{cart_incomplete?.total}</td>
+                        </tr>
                         </tfoot>
 
                     </table>
@@ -83,17 +118,27 @@ const Order = () => {
                     <div>
                         <div className="form-group">
                             <label>Address</label>
-                            <input onChange={(e) => setAddress(e.target.value)} type="text" className="form-control" placeholder="Address"/>
+                            <input onChange={(e) => setAddress(e.target.value)} type="text" className="form-control"
+                                   placeholder="Address"/>
                         </div>
                         <div className="form-group">
                             <label>Phone No</label>
-                            <input onChange={(e) => setPhone(e.target.value)} type="text" className="form-control" placeholder="Phone No"/>
+                            <input onChange={(e) => setPhone(e.target.value)} type="text" className="form-control"
+                                   placeholder="Phone No"/>
                         </div>
                         <div className="form-group">
                             <label>Email</label>
-                            <input onChange={(e) => setEmail(e.target.value)} type="text" className="form-control" placeholder="Email" value={email}/>
+                            <input onChange={(e) => setEmail(e.target.value)} type="text" className="form-control"
+                                   placeholder="Email" value={email}/>
                         </div>
-                        <button onClick={order} className="btn btn-success my-2">Order</button>
+                        <div className="">
+                            <div>
+                                <button onClick={order} className="btn btn-success my-2">Cash On Delivery</button>
+                            </div>
+                            <div>
+                                <button className="btn btn-outline-info fs-5">Pay Through SSLCOMMERZ</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
