@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {useGlobalState} from "../state/provider";
 import * as GiIcon from "react-icons/gi";
 import '../components/css/nav.css'
+import SearchBox from "./SearchBox";
 
 const Navbar = () => {
     const [{profile, cart_incomplete}, dispatch] = useGlobalState();
@@ -25,8 +26,8 @@ const Navbar = () => {
         window.location.href = '/'
     }
     return (
-        <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="container">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light main-nav">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/">Mobile Shop</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -64,13 +65,9 @@ const Navbar = () => {
                             }
 
                         </ul>
-                        <form>
-                            <div className="d-flex input-group input-group-lg">
-                                <input className="form-control me-2 border-info " type="search" placeholder="Search"
-                                       aria-label="Search"/>
-                                <button className="btn btn-outline-success" type="submit">Search</button>
-                            </div>
-                        </form>
+                        <div className="searchbox">
+                            <SearchBox/>
+                        </div>
                     </div>
                 </div>
             </nav>

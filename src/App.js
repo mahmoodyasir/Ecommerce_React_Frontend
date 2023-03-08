@@ -28,6 +28,8 @@ import All_Customer_Profile from "./admin_components/All_Customer_Profile";
 import Admin_User from "./admin_components/Admin_User";
 import Single_Customer_Profile from "./admin_components/Single_Customer_Profile";
 import Incomplete_Orders from "./admin_components/Incomplete_Orders";
+import SuccessRoute from "./components/OnlinePayment/SuccessRoute";
+import FailedRoute from "./components/OnlinePayment/FailedRoute";
 
 const App = () => {
     // console.log(userToken, " this is userToken")
@@ -39,7 +41,8 @@ const App = () => {
         cart_complete,
         category_product,
         only_product,
-        all_order
+        all_order,
+        all_data
     }, dispatch] = useGlobalState()
     // console.log(cart_complete, "#### cart complete ####")
     // console.log(cart_incomplete, "#### cart Incomplete ####")
@@ -161,6 +164,21 @@ const App = () => {
         only_product()
     }, [dispatch, admin_profile]);
 
+    useEffect(() => {
+        const get_search_data = async () => {
+            await Axios({
+                method: "get",
+                url: `${domain}/api/search_product/`
+            }).then(response => {
+                dispatch({
+                    type: "ALL_DATA",
+                    all_data: response.data
+                })
+            })
+        }
+        get_search_data()
+    }, [dispatch]);
+
 
     return (
         <BrowserRouter>
@@ -181,7 +199,7 @@ const App = () => {
                                            component={User_Control_Admin}/>
                                     <Route exact path="/order_page/all_order" component={All_Orders}/>
                                     <Route exact path="/admin_logout" component={Admin_Logout}/>
-                                    <Route exact path="/admin_user" component={Admin_User} />
+                                    <Route exact path="/admin_user" component={Admin_User}/>
                                     <Route exact path="/profile" component={ProfilePage}/>
                                     <Route exact path="/customers" component={All_Customer_Profile}/>
                                     <Route exact path="/order_page/incomplete_order" component={Incomplete_Orders}/>
@@ -205,6 +223,9 @@ const App = () => {
                                     <Route exact path="/" component={HomePage}/>
                                     <Route exact path="/product/:id" component={ProductDetails}/>
                                     <Route exact path="/category/:id" component={CategoryProducts}/>
+
+                                    <Route exact path="/success" component={SuccessRoute}/>
+                                    <Route exact path="/failed" component={FailedRoute}/>
                                 </Switch>
 
                             </>

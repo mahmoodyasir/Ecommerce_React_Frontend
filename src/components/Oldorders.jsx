@@ -51,6 +51,8 @@ const Oldorders = () => {
                 <thead>
                 <tr>
                     <th>SN</th>
+                    <th>Date</th>
+                    <th>Payment Type</th>
                     <th>Total</th>
                     <th>Product</th>
                     <th>Order Status</th>
@@ -65,12 +67,15 @@ const Oldorders = () => {
                         orders?.map((order, i) =>
                             <tr key={i}>
                                 <td>{i + 1}</td>
+                                <td>{order?.date}</td>
+                                <td>{order?.payment_type === 'online' ? "Online" : "Cash On Delivery"}</td>
                                 <td>{order?.total}</td>
                                 <td>{order?.cartproduct?.length}</td>
                                 <td>{order?.order_list?.choice_name}</td>
                                 <td>
                                     {/*<Link to={`/orderdetails/${order?.id}`} className="btn btn-info">Details</Link>*/}
-                                    <Link onClick={() => getOrderDetails(order?.id)} to="#" className="btn btn-info">Details</Link>
+                                    <Link onClick={() => getOrderDetails(order?.id)} to="#"
+                                          className="btn btn-info">Details</Link>
                                 </td>
                                 <td>
                                     <button onClick={() => deleteorderhistory(order?.id)}
@@ -95,12 +100,20 @@ const Oldorders = () => {
                         <table className="table table-striped">
                             <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Total</th>
+                                {/*<th>Date</th>*/}
                                 <th>Email</th>
                                 <th>Mobile</th>
-                                {/*<th>Discount</th>*/}
                                 <th>Products</th>
+                                {
+                                    orderdetails?.payment_type === 'online' ?
+                                        <>
+                                            <th>Medium</th>
+                                            <th>Transaction ID</th>
+                                        </>
+                                        :
+                                        <></>
+                                }
+                                <th>Total</th>
                             </tr>
                             </thead>
 
@@ -108,12 +121,20 @@ const Oldorders = () => {
                             <tr>
                                 {
                                     <>
-                                        <td>{orderdetails?.date}</td>
-                                        <td>{orderdetails?.total}</td>
+                                        {/*<td>{orderdetails?.date}</td>*/}
                                         <td>{orderdetails?.email}</td>
                                         <td>{orderdetails?.mobile}</td>
-                                        {/*<td>{orderdetails?.discount}%</td>*/}
                                         <td>{orderdetails?.cartproduct?.length}</td>
+                                        {
+                                            orderdetails?.payment_type === 'online' ?
+                                                <>
+                                                    <td>{orderdetails?.transaction_medium}</td>
+                                                    <td>{orderdetails?.transaction_id}</td>
+                                                </>
+                                                :
+                                                <></>
+                                        }
+                                        <td>{orderdetails?.total}</td>
                                     </>
                                 }
                             </tr>

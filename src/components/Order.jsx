@@ -14,52 +14,45 @@ const Order = () => {
     console.log(cart_incomplete)
     console.log(profile?.prouser?.first_name)
 
-    for(let i=0; i<cart_incomplete?.cartproduct?.length; i++)
-    {
+    for (let i = 0; i < cart_incomplete?.cartproduct?.length; i++) {
         quantity = quantity + (cart_incomplete?.cartproduct[i]?.quantity);
     }
     console.log(quantity)
 
     const order = async () => {
-        if(email === null || phone === null || address === null)
-        {
+        if (email === null || phone === null || address === null) {
             alert("Please Provide All Fields !! ")
-        }
-        else
-        {
+        } else {
             await Axios({
-            method: "post",
-            url: `${domain}/api/orders/`,
-            headers: header,
-            data: {
-                "cartId": cart_incomplete?.id,
-                "address": address,
-                "email": email,
-                "mobile": phone,
+                method: "post",
+                url: `${domain}/api/orders/`,
+                headers: header,
+                data: {
+                    "cartId": cart_incomplete?.id,
+                    "address": address,
+                    "email": email,
+                    "mobile": phone,
 
-            }
-        }).then(response => {
-            dispatch({
-                type: "PAGE_RELOAD",
-                page_reload: response.data
+                }
+            }).then(response => {
+                dispatch({
+                    type: "PAGE_RELOAD",
+                    page_reload: response.data
+                })
+                dispatch({
+                    type: "ADD_CARTINCOMPLETE",
+                    cart_incomplete: null
+                })
+                alert("Your order has been placed")
+                history.push("/oldorders")
             })
-            dispatch({
-                type: "ADD_CARTINCOMPLETE",
-                cart_incomplete: null
-            })
-            alert("Your order has been placed")
-            history.push("/oldorders")
-        })
         }
     }
 
     const onlineOrder = async () => {
-        if(email === null || phone === null || address === null)
-        {
+        if (email === null || phone === null || address === null) {
             alert("Please Provide All Fields !! ")
-        }
-        else
-        {
+        } else {
             const formdata = new FormData()
             formdata.append("email", email);
             formdata.append("name", profile?.prouser?.first_name + " " + profile?.prouser?.last_name);
@@ -68,6 +61,21 @@ const Order = () => {
             formdata.append("address", address);
             formdata.append("quantity", quantity);
             formdata.append("total", cart_incomplete?.total);
+
+            await Axios({
+                method: "post",
+                url: `${domain}/api/online_payment/`,
+                headers: header,
+                data: formdata
+            }).then(response => {
+                console.log(response.data["data"])
+                if (response.data["data"] !== "invalid") {
+                    window.location.replace(response.data);
+
+                } else {
+                    alert("Something Went Wrong !!")
+                }
+            })
         }
     }
 
@@ -136,7 +144,9 @@ const Order = () => {
                                 <button onClick={order} className="btn btn-success my-2">Cash On Delivery</button>
                             </div>
                             <div>
-                                <button className="btn btn-outline-info fs-5">Pay Through SSLCOMMERZ</button>
+                                <button onClick={onlineOrder} className="btn btn-outline-info fs-5">Pay Through
+                                    SSLCOMMERZ
+                                </button>
                             </div>
                         </div>
                     </div>

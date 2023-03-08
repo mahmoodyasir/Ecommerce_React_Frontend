@@ -1,0 +1,57 @@
+input:focus {
+  outline: none;
+}
+
+.dataResult {
+  margin-top: 10px;
+  display: block;
+  justify-content: center;
+  width: 270px;
+  height: 300px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.dataResult::-webkit-scrollbar {
+
+}
+
+.dataResult a{
+  text-decoration: none;
+}
+
+.dataResult .dataItem {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  color: black;
+}
+.result_bar {
+  margin-top: 25px;
+}
+.dataItem p {
+  margin-left: 10px;
+}
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  background-color: lightgrey;
+}
+
+#clearBtn {
+  cursor: pointer;
+}
+
+.outer-scope{
+  display: block;
+}
+
+.inner-scope{
+  position: absolute;
+  z-index: 2;
+}

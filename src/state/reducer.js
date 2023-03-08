@@ -8,6 +8,7 @@ export const initialstate = {
     only_product:null,
     all_order: null,
     count_state:null,
+    all_data:null,
 }
 
 const reducer = (state, action) => {
@@ -56,6 +57,11 @@ const reducer = (state, action) => {
                 return {
                     ...state,
                     count_state: action.count_state
+                }
+         case "ALL_DATA":
+                return {
+                    ...state,
+                    all_data: action.all_data
                 }
 
         default:

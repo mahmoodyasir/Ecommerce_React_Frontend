@@ -56,7 +56,7 @@ const HomePage = () => {
     }
 
     return (
-        <div className="container index">
+        <div className="container index mt-0">
             <div className="w-100 mb-5">
                 <CarouselBar/>
             </div>
