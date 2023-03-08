@@ -1,0 +1,19 @@
+.radius-top{
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.submit-btn{
+    background-color: #5b3979 !important;
+}
+
+.submit-btn:hover{
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    transition: 0.5s;
+}
+
+.register-bg-control{
+    background-color: white !important;
+    color: black !important;
+}

@@ -7,12 +7,13 @@ import {domain, header} from "../env";
 const Order = () => {
     const [{cart_incomplete, profile}, dispatch] = useGlobalState()
     const history = useHistory()
-    const [email, setEmail] = useState(profile?.prouser?.email);
+    const [email, setEmail] = useState(profile?.prouser?.email !== null ? profile?.prouser?.email : null);
     const [address, setAddress] = useState(null);
     const [phone, setPhone] = useState(null);
     let quantity = 0;
     console.log(cart_incomplete)
     console.log(profile?.prouser?.first_name)
+    console.log(email.length, "Email")
 
     for (let i = 0; i < cart_incomplete?.cartproduct?.length; i++) {
         quantity = quantity + (cart_incomplete?.cartproduct[i]?.quantity);
@@ -20,7 +21,7 @@ const Order = () => {
     console.log(quantity)
 
     const order = async () => {
-        if (email === null || phone === null || address === null) {
+        if (phone === null || address === null || email === null || phone === '' || address === '' || email==='') {
             alert("Please Provide All Fields !! ")
         } else {
             await Axios({
@@ -50,7 +51,7 @@ const Order = () => {
     }
 
     const onlineOrder = async () => {
-        if (email === null || phone === null || address === null) {
+        if (email === null || phone === null || address === null || phone === '' || address === '' || email==='') {
             alert("Please Provide All Fields !! ")
         } else {
             const formdata = new FormData()
@@ -68,9 +69,9 @@ const Order = () => {
                 headers: header,
                 data: formdata
             }).then(response => {
-                console.log(response.data["data"])
-                if (response.data["data"] !== "invalid") {
-                    window.location.replace(response.data);
+                console.log(response.data)
+                if (response.data['status'] === "SUCCESS") {
+                    window.location.replace(response.data['GatewayPageURL']);
 
                 } else {
                     alert("Something Went Wrong !!")
