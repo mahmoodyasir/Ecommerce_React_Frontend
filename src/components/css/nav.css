@@ -1,0 +1,21 @@
+.main-nav{
+    background-color: #5b3979;
+    border-radius: 12px;
+    border: 0;
+}
+
+.activeBtn{
+    background-color: orangered;
+    border-radius: 6px;
+    margin: 6px;
+}
+
+.item-effect a{
+    margin: 6px;
+    padding: 6px 6px 6px 6px !important;
+}
+
+.item-effect a:hover{
+    background-color: #e5743f !important;
+    border-radius: 6px !important;
+}

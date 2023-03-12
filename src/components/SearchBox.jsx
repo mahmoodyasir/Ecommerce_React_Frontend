@@ -53,7 +53,7 @@ const SearchBox = () => {
                 <div className="dataResult inner-scope">
                     {filteredData.map((item, i) => {
                         return (
-                            <Link to={`/product/${item.id}`} key={i} type="button" className="dataItem"
+                            <Link to={`/product/${item.id}`} key={i} type="button" className="dataItem text-black"
                               >
                                 <p>{item?.title} </p>
                             </Link>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {useGlobalState} from "../state/provider";
 import * as GiIcon from "react-icons/gi";
 import '../components/css/nav.css'
@@ -7,6 +7,9 @@ import SearchBox from "./SearchBox";
 
 const Navbar = () => {
     const [{profile, cart_incomplete}, dispatch] = useGlobalState();
+    const location = useLocation();
+    const {pathname} = location;
+    const splitLocation = pathname.split("/");
 
     let cart_product_length = 0
     if (cart_incomplete !== null) {
@@ -27,39 +30,53 @@ const Navbar = () => {
     }
     return (
         <div className="container">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light main-nav">
+            <nav className="navbar navbar-expand-lg navbar-light main-nav">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="/">Mobile Shop</Link>
+                    <Link className="navbar-brand text-white" to="/">Mobile Shop</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-auto item-effect">
+                            <li className="nav-item">
+                                <Link
+                                      className={splitLocation[1] === "" ? "nav-link items text-white activeBtn" : "nav-link items text-white"}
+                                      to="/">Home</Link>
+                            </li>
 
                             {
                                 profile !== null ?
                                     <>
                                         <li className="nav-item">
                                             {/*({cart_product_length})*/}
-                                            <Link className="nav-link items position-relative"
-                                                  to="/cart">Cart({cart_product_length})</Link>
+                                            <Link
+                                                className={splitLocation[1] === "cart" || splitLocation[1] === "order" || splitLocation[1] === "oldorders" ? "nav-link items text-white activeBtn" : "nav-link items text-white"}
+                                                to="/cart">Cart({cart_product_length})</Link>
                                         </li>
                                         <li className="nav-item">
-                                            <Link className="nav-link items" to="/profile">Profile</Link>
+                                            <Link
+                                                className={splitLocation[1] === "profile" ? "nav-link items text-white activeBtn" : "nav-link items text-white"}
+                                                to="/profile">Profile</Link>
                                         </li>
                                         <li className="nav-item">
-                                            <Link onClick={logout} className="nav-link items" to="">Logout</Link>
+                                            <Link onClick={logout}
+                                                  className={splitLocation[1] === "logout" ? "nav-link items text-white activeBtn" : "nav-link items text-white"}
+                                                  to="">Logout</Link>
                                         </li>
                                     </>
                                     :
                                     <>
                                         <li className="nav-item">
-                                            <Link className="nav-link items" to="/login">Login</Link>
+                                            <Link
+                                                className={splitLocation[1] === "login" ? "nav-link items text-white activeBtn" : "nav-link items text-white"}
+                                                to="/login">Login</Link>
                                         </li>
                                         <li className="nav-item">
-                                            <Link className="nav-link items" to="/register">Registration</Link>
+                                            <Link
+                                                className={splitLocation[1] === "register" ? "nav-link items text-white activeBtn" : "nav-link items text-white"}
+                                                to="/register">Registration</Link>
                                         </li>
                                     </>
                             }
