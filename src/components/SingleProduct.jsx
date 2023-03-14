@@ -55,7 +55,7 @@ const SingleProduct = ({item}) => {
                     <button style={{borderBottomLeftRadius:"6px"}} className="border-0 py-2 w-50 bg-indigo text-white ">
                         <span><ImHeart className="fs-4"/> Wishlist</span>
                     </button>
-                    <button style={{borderBottomRightRadius:"6px"}} onClick={() => addtocart(item.id)} className="border-0 py-2 w-50 bg-purple text-white ">
+                    <button style={{borderBottomRightRadius:"6px"}} onClick={() => addtocart(item.id)} className="border-0 py-2 w-50 bg-purple text-white add-cart-btn">
                         <span className=""><BsCart4 className="fs-4"/> Add to Cart</span>
                     </button>
                 </div>

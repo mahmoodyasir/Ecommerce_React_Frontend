@@ -45,9 +45,9 @@ const Oldorders = () => {
     }
 
     return (
-        <div className="container">
-            <h1>Order History</h1>
-            <table className="table table-striped">
+        <div className="container table-responsive-sm card border-0 p-2 rounded-3 shadow-lg">
+            <h1 className="text-center">Order History</h1>
+            <table className="table table-hover table-dark">
                 <thead>
                 <tr>
                     <th>SN</th>
@@ -93,83 +93,90 @@ const Oldorders = () => {
             </table>
 
 
-            {
-                orderdetails !== null ?
-                    <>
-                        <h1 className="display-6 mt-5 text-center mb-4">Order Details</h1>
-                        <table className="table table-striped">
-                            <thead>
-                            <tr>
-                                {/*<th>Date</th>*/}
-                                <th>Email</th>
-                                <th>Mobile</th>
-                                <th>Products</th>
-                                {
-                                    orderdetails?.payment_type === 'online' ?
-                                        <>
-                                            <th>Medium</th>
-                                            <th>Transaction ID</th>
-                                        </>
-                                        :
-                                        <></>
-                                }
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            <tr>
-                                {
-                                    <>
-                                        {/*<td>{orderdetails?.date}</td>*/}
-                                        <td>{orderdetails?.email}</td>
-                                        <td>{orderdetails?.mobile}</td>
-                                        <td>{orderdetails?.cartproduct?.length}</td>
+            <div className="col-md-12 row">
+                {
+                    orderdetails !== null ?
+                        <>
+                            <div className="col-lg-7 col-md-12 col-12 table-responsive-sm">
+                                <h1 className="display-6 mt-5 text-center mb-4">Order Details</h1>
+                                <table className="table table-hover table-dark">
+                                    <thead>
+                                    <tr>
+                                        {/*<th>Date</th>*/}
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Products</th>
                                         {
                                             orderdetails?.payment_type === 'online' ?
                                                 <>
-                                                    <td>{orderdetails?.transaction_medium}</td>
-                                                    <td>{orderdetails?.transaction_id}</td>
+                                                    <th>Medium</th>
+                                                    <th>Transaction ID</th>
                                                 </>
                                                 :
                                                 <></>
                                         }
-                                        <td>{orderdetails?.total}</td>
-                                    </>
-                                }
-                            </tr>
-                            </tbody>
-                        </table>
-                        <h1>Product Details</h1>
-                        <table className="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>SN</th>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Subtotal</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            {
-                                product?.map((item, i) => (
-                                    <tr key={i}>
-                                        <td>{i + 1}</td>
-                                        <td>{item.product[0]?.title}</td>
-                                        <td>{item.price}</td>
-                                        <td>{item.quantity}</td>
-                                        <td>{item.subtotal}</td>
+                                        <th>Total</th>
                                     </tr>
-                                ))
-                            }
-                            </tbody>
-                        </table>
-                    </>
-                    :
-                    <></>
-            }
+                                    </thead>
+
+                                    <tbody>
+                                    <tr>
+                                        {
+                                            <>
+                                                {/*<td>{orderdetails?.date}</td>*/}
+                                                <td>{orderdetails?.email}</td>
+                                                <td>{orderdetails?.mobile}</td>
+                                                <td>{orderdetails?.cartproduct?.length}</td>
+                                                {
+                                                    orderdetails?.payment_type === 'online' ?
+                                                        <>
+                                                            <td>{orderdetails?.transaction_medium}</td>
+                                                            <td>{orderdetails?.transaction_id}</td>
+                                                        </>
+                                                        :
+                                                        <></>
+                                                }
+                                                <td>{orderdetails?.total}</td>
+                                            </>
+                                        }
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className="col-lg-5 col-md-12 col-12 table-responsive-sm">
+                                <h1 className="mt-5 mb-4 display-6 text-center">Product Details</h1>
+                                <table className="table table-hover table-dark">
+                                    <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {
+                                        product?.map((item, i) => (
+                                            <tr key={i}>
+                                                <td>{i + 1}</td>
+                                                <td>{item.product[0]?.title}</td>
+                                                <td>{item.price}</td>
+                                                <td>{item.quantity}</td>
+                                                <td>{item.subtotal}</td>
+                                            </tr>
+                                        ))
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </>
+                        :
+                        <></>
+                }
+            </div>
 
 
         </div>

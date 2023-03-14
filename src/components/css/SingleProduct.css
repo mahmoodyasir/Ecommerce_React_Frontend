@@ -10,3 +10,8 @@
     font-size: 160%;
     text-shadow: orangered;
 }
+
+.add-cart-btn:hover{
+    background-color: #12a012;
+    transition: 0.3s;
+}
