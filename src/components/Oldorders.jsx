@@ -45,52 +45,54 @@ const Oldorders = () => {
     }
 
     return (
-        <div className="container table-responsive-sm card border-0 p-2 rounded-3 shadow-lg">
-            <h1 className="text-center">Order History</h1>
-            <table className="table table-hover table-dark">
-                <thead>
-                <tr>
-                    <th>SN</th>
-                    <th>Date</th>
-                    <th>Payment Type</th>
-                    <th>Total</th>
-                    <th>Product</th>
-                    <th>Order Status</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                </thead>
+        <div className="container card mb-5 border-0 p-2 rounded-3 shadow-lg">
+            <div className="table-responsive-sm">
+                <h1 className="text-center">Order History</h1>
+                <table className="table table-hover table-dark">
+                    <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Date</th>
+                        <th>Payment Type</th>
+                        <th>Total</th>
+                        <th>Product</th>
+                        <th>Order Status</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
 
-                <tbody>
-                {
-                    orders?.length !== 0 ?
-                        orders?.map((order, i) =>
-                            <tr key={i}>
-                                <td>{i + 1}</td>
-                                <td>{order?.date}</td>
-                                <td>{order?.payment_type === 'online' ? "Online" : "Cash On Delivery"}</td>
-                                <td>{order?.total}</td>
-                                <td>{order?.cartproduct?.length}</td>
-                                <td>{order?.order_list?.choice_name}</td>
-                                <td>
-                                    {/*<Link to={`/orderdetails/${order?.id}`} className="btn btn-info">Details</Link>*/}
-                                    <Link onClick={() => getOrderDetails(order?.id)} to="#"
-                                          className="btn btn-info">Details</Link>
-                                </td>
-                                <td>
-                                    <button onClick={() => deleteorderhistory(order?.id)}
-                                            className="btn btn-danger">Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ) :
-                        <div>
-                            <h1>No Old Orders</h1>
-                            <Link to="/" className="btn btn-info">Go to Home</Link>
-                        </div>
-                }
-                </tbody>
-            </table>
+                    <tbody>
+                    {
+                        orders?.length !== 0 ?
+                            orders?.map((order, i) =>
+                                <tr key={i}>
+                                    <td>{i + 1}</td>
+                                    <td>{order?.date}</td>
+                                    <td>{order?.payment_type === 'online' ? "Online" : "Cash On Delivery"}</td>
+                                    <td>{order?.total}</td>
+                                    <td>{order?.cartproduct?.length}</td>
+                                    <td>{order?.order_list?.choice_name}</td>
+                                    <td>
+                                        {/*<Link to={`/orderdetails/${order?.id}`} className="btn btn-info">Details</Link>*/}
+                                        <Link onClick={() => getOrderDetails(order?.id)} to="#"
+                                              className="btn btn-info">Details</Link>
+                                    </td>
+                                    <td>
+                                        <button onClick={() => deleteorderhistory(order?.id)}
+                                                className="btn btn-danger">Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ) :
+                            <div>
+                                <h1>No Old Orders</h1>
+                                <Link to="/" className="btn btn-info">Go to Home</Link>
+                            </div>
+                    }
+                    </tbody>
+                </table>
+            </div>
 
 
             <div className="col-md-12 row">

@@ -10,13 +10,18 @@ const Navbar = () => {
     const location = useLocation();
     const {pathname} = location;
     const splitLocation = pathname.split("/");
+    let quantity = 0;
 
-    let cart_product_length = 0
-    if (cart_incomplete !== null) {
-        cart_product_length = cart_incomplete?.cartproduct?.length
-    } else {
-        cart_product_length = 0
+    for (let i = 0; i < cart_incomplete?.cartproduct?.length; i++) {
+        quantity = quantity + (cart_incomplete?.cartproduct[i]?.quantity);
     }
+
+    // let cart_product_length = 0
+    // if (cart_incomplete !== null) {
+    //     cart_product_length = cart_incomplete?.cartproduct?.length
+    // } else {
+    //     cart_product_length = 0
+    // }
 
     // console.log(profile, " From Navbar Page")
 
@@ -38,12 +43,13 @@ const Navbar = () => {
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
+
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-auto item-effect">
                             <li className="nav-item">
                                 <Link
-                                      className={splitLocation[1] === "" ? "nav-link items text-white activeBtn" : "nav-link items text-white"}
-                                      to="/">Home</Link>
+                                    className={splitLocation[1] === "" ? "nav-link items text-white activeBtn" : "nav-link items text-white"}
+                                    to="/">Home</Link>
                             </li>
 
                             {
@@ -53,7 +59,7 @@ const Navbar = () => {
                                             {/*({cart_product_length})*/}
                                             <Link
                                                 className={splitLocation[1] === "cart" || splitLocation[1] === "order" || splitLocation[1] === "oldorders" ? "nav-link items text-white activeBtn" : "nav-link items text-white"}
-                                                to="/cart">Cart({cart_product_length})</Link>
+                                                to="/cart">Cart({quantity})</Link>
                                         </li>
                                         <li className="nav-item">
                                             <Link
@@ -65,6 +71,7 @@ const Navbar = () => {
                                                   className={splitLocation[1] === "logout" ? "nav-link items text-white activeBtn" : "nav-link items text-white"}
                                                   to="">Logout</Link>
                                         </li>
+
                                     </>
                                     :
                                     <>
@@ -86,6 +93,7 @@ const Navbar = () => {
                             <SearchBox/>
                         </div>
                     </div>
+
                 </div>
             </nav>
         </div>

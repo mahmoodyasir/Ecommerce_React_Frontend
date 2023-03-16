@@ -19,3 +19,17 @@
     background-color: #e5743f !important;
     border-radius: 6px !important;
 }
+
+.lid{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.logout{
+    transform: rotateZ(90deg);
+}
+
+.logout:hover{
+    background-color: red;
+}
+
