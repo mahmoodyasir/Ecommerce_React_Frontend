@@ -51,6 +51,7 @@ const SingleProduct = ({item}) => {
                 await Axios({
                     method: "post",
                     url: `${domain}/api/checkproduct/`,
+                    headers: header,
                     data: {"cartId": cart_incomplete?.id, "productId": item?.id}
                 }).then(response => {
                     setIfadded(response.data["status"])

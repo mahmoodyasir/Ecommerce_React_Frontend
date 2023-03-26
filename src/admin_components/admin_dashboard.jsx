@@ -40,6 +40,7 @@ const SidebarNav = styled.nav`
     left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
     transition: 350ms;
     z-index: 10;
+    overflow: auto;
 `;
 
 const SidebarWrap = styled.div`
@@ -79,19 +80,19 @@ const Admin_dashboard = () => {
        <>
            <IconContext.Provider value={{ color: '#fff'}}>
            <Nav>
-               <NavIcon to="#">
+               <NavIcon style={{ backgroundColor: '#15171c'}} to="#">
                     <FaIcons.FaBars onClick={showSidebar} />
                </NavIcon>
            </Nav>
            <SidebarNav sidebar={sidebar}>
                <SidebarWrap>
-                   <NavIcon to="#">
+                   <NavIcon style={{ backgroundColor: '#15171c'}} to="#">
                        <AiIcons.AiOutlineClose onClick={showSidebar} />
                    </NavIcon>
 
                     <div className="mb-4">
                         <img src={`${domain}${profile?.image}`} className="rounded-circle account-image" />
-                        <Link className="nav-link" to="/profile" target="_blank"><button className="btn link-hover text-white btn-info">Username: {profile?.prouser?.username}</button></Link>
+                        <Link className="ms-3" to="/profile" target="_blank"><button className="btn link-hover text-white btn-info">Username: {profile?.prouser?.username}</button></Link>
                     </div>
 
                    {SidebarData.map((item, index) => {
