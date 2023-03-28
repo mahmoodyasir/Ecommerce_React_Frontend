@@ -67,6 +67,10 @@ const Navbar = () => {
                                                 to="/profile">Profile</Link>
                                         </li>
                                         <li className="nav-item">
+                                            <Link className={splitLocation[1] === "wishlist" ? "nav-link items text-white activeBtn" : "nav-link items text-white"}
+                                                  to="/wishlist">Wishlist</Link>
+                                        </li>
+                                        <li className="nav-item">
                                             <Link onClick={logout}
                                                   className={splitLocation[1] === "logout" ? "nav-link items text-white activeBtn" : "nav-link items text-white"}
                                                   to="">Logout</Link>

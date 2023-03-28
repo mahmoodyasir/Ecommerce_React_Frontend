@@ -30,19 +30,15 @@ import Single_Customer_Profile from "./admin_components/Single_Customer_Profile"
 import Incomplete_Orders from "./admin_components/Incomplete_Orders";
 import SuccessRoute from "./components/OnlinePayment/SuccessRoute";
 import FailedRoute from "./components/OnlinePayment/FailedRoute";
+import WishList from "./components/WishList/WishList";
+import {Toaster} from "react-hot-toast";
 
 const App = () => {
     // console.log(userToken, " this is userToken")
     const [{
         profile,
         page_reload,
-        admin_profile,
-        cart_incomplete,
-        cart_complete,
-        category_product,
-        only_product,
-        all_order,
-        all_data
+        admin_profile
     }, dispatch] = useGlobalState()
     // console.log(cart_complete, "#### cart complete ####")
     // console.log(cart_incomplete, "#### cart Incomplete ####")
@@ -179,6 +175,22 @@ const App = () => {
         get_search_data()
     }, [dispatch]);
 
+    useEffect(() => {
+        const getWishListItem = async () => {
+            await Axios({
+                method: "get",
+                url: `${domain}/api/wishlist/`,
+                headers: header
+            }).then(response => {
+                dispatch({
+                    type: "ALL_WISHLIST",
+                    all_wishlist: response.data
+                })
+            })
+        }
+        getWishListItem();
+    }, [dispatch, page_reload]);
+
 
     return (
         <BrowserRouter>
@@ -226,6 +238,8 @@ const App = () => {
 
                                     <Route exact path="/success" component={SuccessRoute}/>
                                     <Route exact path="/failed" component={FailedRoute}/>
+
+                                    <Route exact path="/wishlist" component={WishList}/>
                                 </Switch>
 
                             </>
@@ -250,6 +264,7 @@ const App = () => {
 
                 <Route exact component={HomePage}/>
             </Switch>
+            <Toaster/>
         </BrowserRouter>
     )
 }

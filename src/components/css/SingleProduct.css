@@ -15,3 +15,8 @@
     background-color: #12a012;
     transition: 0.3s;
 }
+
+.add-wish-btn:hover{
+    background-color: #a0125e;
+    transition: 0.3s;
+}

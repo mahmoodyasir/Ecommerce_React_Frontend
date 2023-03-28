@@ -6,21 +6,23 @@ import Axios from "axios";
 import {domain, header} from "../env";
 import "./css/SingleProduct.css"
 import {useGlobalState} from "../state/provider";
+import toast from "react-hot-toast";
 
 const SingleProduct = ({item}) => {
-    const [{profile, cart_incomplete}, dispatch] = useGlobalState()
+    const [{profile, cart_incomplete, all_wishlist}, dispatch] = useGlobalState()
     const [ifadded, setIfadded] = useState(null);
     const [quantity, setQuantity] = useState(null);
     const [cartId, setCartId] = useState(null);
+    const [wish, setWish] = useState(null);
     let cart_product_length = 0
     if (cart_incomplete !== null) {
         cart_product_length = cart_incomplete?.cartproduct?.length
     } else {
         cart_product_length = 0
     }
-    console.log(cart_incomplete)
+    // console.log(cart_incomplete)
 
-    const history = useHistory()
+    const history = useHistory();
     const addtocart = async (id) => {
         profile !== null ? (
                 await Axios({
@@ -101,6 +103,37 @@ const SingleProduct = ({item}) => {
         })
     }
 
+    const addToWishList = async (id) => {
+        await Axios({
+            method: "post",
+            url: `${domain}/api/wishlist/`,
+            data: {"id": id},
+            headers: header
+        }).then(response => {
+            console.log(response.data)
+            setWish(response.data["error"])
+            dispatch({
+                type: "PAGE_RELOAD",
+                page_reload: response.data
+            })
+            toast.success("Added to WishList")
+        })
+    }
+
+    useEffect(() => {
+        let i = 0;
+        const wishlistChecker = () => {
+            if (all_wishlist !== null && all_wishlist[0]?.wishedProduct.length > 0) {
+                for (i = 0; i < all_wishlist[0]?.wishedProduct.length; i++) {
+                    if (all_wishlist[0]?.wishedProduct[i]?.id === item?.id) {
+                        setWish(false)
+                    }
+                }
+            }
+        }
+        wishlistChecker();
+    }, [all_wishlist]);
+
 
     return (
         <div className="card single_product border-0 shadow rounded-3 mb-5">
@@ -125,24 +158,43 @@ const SingleProduct = ({item}) => {
                     {/*    to={`/product/${item.id}`} target="_blank">see more</Link></p>*/}
                 </div>
                 <div className="card-footer border-0 p-0 bg-white">
-                    <button style={{borderBottomLeftRadius: "6px"}}
-                            className="border-0 py-2 m-0 w-50 bg-indigo text-white ">
-                        <span><ImHeart className="fs-4"/> Wishlist</span>
-                    </button>
+
+                    {
+                        wish === false ?
+                            <>
+                               <button style={{borderBottomLeftRadius: "6px"}}
+                                        className="border-0 py-2 m-0 w-50 bg-warning text-white disabled" disabled={true}>
+                                    <span><ImHeart className="fs-4"/> Added</span>
+                                </button>
+                            </>
+                            :
+                            <>
+                                <button onClick={() => addToWishList(item.id)} style={{borderBottomLeftRadius: "6px"}}
+                                        className="border-0 py-2 m-0 w-50 bg-indigo text-white add-wish-btn">
+                                    <span><ImHeart className="fs-4"/> Wishlist</span>
+                                </button>
+                            </>
+                    }
 
 
                     {
                         ifadded === true ?
                             <>
-                                <div style={{borderBottomRightRadius: "6px"}} className="btn-group w-50 bg-white"  aria-label="...">
-                                    <button onClick={() => decrease_cart(cartId)} style={{borderBottomLeftRadius: "0px", borderTopLeftRadius: "0px"}} className="btn btn-danger border-0 pb-2 mt-0">-</button>
+                                <div style={{borderBottomRightRadius: "6px"}} className="btn-group w-50 bg-white"
+                                     aria-label="...">
+                                    <button onClick={() => decrease_cart(cartId)}
+                                            style={{borderBottomLeftRadius: "0px", borderTopLeftRadius: "0px"}}
+                                            className="btn btn-danger border-0 pb-2 mt-0">-
+                                    </button>
                                     <button className="btn border-0 pb-2 mt-0 fw-bold" disabled>{quantity}</button>
-                                    <button onClick={() => increase_cart(cartId)} style={{borderTopRightRadius: "0px"}} className="btn btn-success border-0 pb-2 mt-0">+</button>
+                                    <button onClick={() => increase_cart(cartId)} style={{borderTopRightRadius: "0px"}}
+                                            className="btn btn-success border-0 pb-2 mt-0">+
+                                    </button>
                                 </div>
                             </>
                             :
                             <>
-                               <button style={{borderBottomRightRadius: "6px"}} onClick={() => addtocart(item.id)}
+                                <button style={{borderBottomRightRadius: "6px"}} onClick={() => addtocart(item.id)}
                                         className="border-0 py-2 w-50 bg-purple text-white add-cart-btn">
                                     <span className=""><BsCart4 className="fs-4"/> Add to Cart</span>
                                 </button>

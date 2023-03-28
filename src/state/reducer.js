@@ -9,6 +9,7 @@ export const initialstate = {
     all_order: null,
     count_state:null,
     all_data:null,
+    all_wishlist:null,
 }
 
 const reducer = (state, action) => {
@@ -62,6 +63,11 @@ const reducer = (state, action) => {
                 return {
                     ...state,
                     all_data: action.all_data
+                }
+         case "ALL_WISHLIST":
+                return {
+                    ...state,
+                    all_wishlist: action.all_wishlist
                 }
 
         default:
