@@ -104,20 +104,27 @@ const SingleProduct = ({item}) => {
     }
 
     const addToWishList = async (id) => {
-        await Axios({
-            method: "post",
-            url: `${domain}/api/wishlist/`,
-            data: {"id": id},
-            headers: header
-        }).then(response => {
-            console.log(response.data)
-            setWish(response.data["error"])
-            dispatch({
-                type: "PAGE_RELOAD",
-                page_reload: response.data
-            })
-            toast.success("Added to WishList")
-        })
+        profile !== null ?
+            (
+                await Axios({
+                    method: "post",
+                    url: `${domain}/api/wishlist/`,
+                    data: {"id": id},
+                    headers: header
+                }).then(response => {
+                    // console.log(response.data)
+                    setWish(response.data["error"])
+                    dispatch({
+                        type: "PAGE_RELOAD",
+                        page_reload: response.data
+                    })
+                    toast.success("Added to WishList")
+                })
+            )
+            :
+            (
+                history.push('/login')
+            )
     }
 
     useEffect(() => {
@@ -162,8 +169,9 @@ const SingleProduct = ({item}) => {
                     {
                         wish === false ?
                             <>
-                               <button style={{borderBottomLeftRadius: "6px"}}
-                                        className="border-0 py-2 m-0 w-50 bg-warning text-white disabled" disabled={true}>
+                                <button style={{borderBottomLeftRadius: "6px"}}
+                                        className="border-0 py-2 m-0 w-50 bg-warning text-white disabled"
+                                        disabled={true}>
                                     <span><ImHeart className="fs-4"/> Added</span>
                                 </button>
                             </>

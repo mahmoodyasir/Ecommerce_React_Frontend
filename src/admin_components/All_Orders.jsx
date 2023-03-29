@@ -4,11 +4,9 @@ import Axios from "axios";
 import {admin_header, domain} from "../env";
 import Order_Control from "./Order_Control";
 import "./CSS/All_Order.css";
-import TableScrollbar from 'react-table-scrollbar';
-import User_Control_Admin from "./User_Control_Admin";
 
 const All_Orders = () => {
-    const [{ admin_profile,all_order }, dispatch] = useGlobalState();
+    const [{ all_order }, dispatch] = useGlobalState();
 
     const [order, setOrder] = useState(null);
     const [order_id, setOrder_id] = useState(null);

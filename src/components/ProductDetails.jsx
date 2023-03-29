@@ -32,7 +32,7 @@ const ProductDetails = () => {
                 method: "get",
                 url: `${domain}/api/product/${id}/`
             }).then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 setProduct(response.data)
                 getcategory(response?.data?.category['id'])
             })
@@ -45,7 +45,7 @@ const ProductDetails = () => {
             method: 'get',
             url: `${domain}/api/category/${id}/`
         }).then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             setCategoryproducts(response.data)
         })
     }
@@ -58,7 +58,7 @@ const ProductDetails = () => {
                     data: {"id": id},
                     headers: header
                 }).then(response => {
-                    console.log(response.data, "$$$$$$$$$$ ADD to CART $$$$$$$");
+                    // console.log(response.data, "$$$$$$$$$$ ADD to CART $$$$$$$");
                     dispatch({
                         type: "PAGE_RELOAD",
                         page_reload: response.data
@@ -130,20 +130,27 @@ const ProductDetails = () => {
     }
 
     const addToWishList = async (id) => {
-        await Axios({
-            method: "post",
-            url: `${domain}/api/wishlist/`,
-            data: {"id": id},
-            headers: header
-        }).then(response => {
-            console.log(response.data)
-            setWish(response.data["error"])
-            dispatch({
-                type: "PAGE_RELOAD",
-                page_reload: response.data
-            })
-            toast.success("Added to WishList")
-        })
+        profile !== null ?
+            (
+                await Axios({
+                    method: "post",
+                    url: `${domain}/api/wishlist/`,
+                    data: {"id": id},
+                    headers: header
+                }).then(response => {
+                    // console.log(response.data)
+                    setWish(response.data["error"])
+                    dispatch({
+                        type: "PAGE_RELOAD",
+                        page_reload: response.data
+                    })
+                    toast.success("Added to WishList")
+                })
+            )
+            :
+            (
+                history.push('/login')
+            )
     }
 
     useEffect(() => {
@@ -181,7 +188,8 @@ const ProductDetails = () => {
                                             <>
                                                 <button
                                                     style={{borderTopLeftRadius: "6px", borderTopRightRadius: "6px"}}
-                                                    className="border-0 py-2 w-50 bg-warning text-white disabled" disabled={true}>
+                                                    className="border-0 py-2 w-50 bg-warning text-white disabled"
+                                                    disabled={true}>
                                                     <span><ImHeart className="fs-4"/> Added</span>
                                                 </button>
                                             </>

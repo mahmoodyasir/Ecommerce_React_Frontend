@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Axios from "axios";
-import {domain} from "../env";
+import {domain, header} from "../env";
 import SingleProduct from "./SingleProduct";
 import {Link} from "react-router-dom";
 import "../admin_components/CSS/All_Order.css"
@@ -11,6 +11,8 @@ import Category from "./Category";
 const HomePage = () => {
     const [products, setProducts] = useState(null);
     const [category, setCategory] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    let i = 0;
     useEffect(() => {
         const getdata = async () => {
             await Axios({
@@ -36,6 +38,7 @@ const HomePage = () => {
         getCategories()
     }, [])
     const next_products = async () => {
+        setCurrentPage(currentPage + 1)
         await Axios({
             method: "get",
             url: products?.next
@@ -46,9 +49,22 @@ const HomePage = () => {
     }
 
     const previous_products = async () => {
+        setCurrentPage(currentPage - 1)
         await Axios({
             method: "get",
             url: products?.previous
+        }).then(response => {
+            console.log(response.data)
+            setProducts(response.data)
+        })
+    }
+
+    const getPageNumber = async (num) => {
+        setCurrentPage(num)
+        console.log(num)
+        await Axios({
+            method: "get",
+            url: `${domain}/api/product/?page=${num}`
         }).then(response => {
             console.log(response.data)
             setProducts(response.data)
@@ -66,14 +82,14 @@ const HomePage = () => {
                 <div className="col-md-12">
                     <div className="row">
                         {
-                        category !== null &&
-                            category?.map((category, i)=>(
+                            category !== null &&
+                            category?.map((category, i) => (
                                 <div key={i} className="col-md-6 col-lg-4 my-2">
                                     {/*<Link to={`/category/${category.id}`} className="btn btn-outline-info">{category?.title}</Link>*/}
                                     <Category category={category}/>
                                 </div>
                             ))
-                    }
+                        }
                     </div>
                 </div>
             </div>
@@ -102,6 +118,27 @@ const HomePage = () => {
                                 }
 
                             </div>
+
+                            <div>
+                                <nav aria-label="...">
+                                    <ul className="pagination pagination-lg">
+                                        {
+                                            products !== null &&
+                                            [...Array(Math.ceil(((products?.count) / 8)))].map((_, index) => (
+                                                currentPage === (index + 1) ?
+                                                    <>
+                                                        <li key={index} className="page-item pagination_item active" onClick={() => getPageNumber(index + 1)}><span className="page-link">{index + 1}</span></li>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <li key={index} className="page-item pagination_item" onClick={() => getPageNumber(index + 1)}><span className="page-link">{index + 1}</span></li>
+                                                    </>
+                                            ))
+                                        }
+                                    </ul>
+                                </nav>
+                            </div>
+
                             <div>
                                 {
                                     products?.next !== null ? (

@@ -134,23 +134,23 @@ const Order = () => {
                     <div>
                         <div className="form-group">
                             <label>Address</label>
-                            <input onChange={(e) => setAddress(e.target.value)} type="text" className="form-control border-0 shadow"
+                            <input onChange={(e) => setAddress(e.target.value)} type="text" className="form-control shadow"
                                    placeholder="Address"/>
                         </div>
                         <div className="form-group">
                             <label>Phone No</label>
-                            <input onChange={(e) => setPhone(e.target.value)} type="text" className="form-control border-0 shadow"
+                            <input onChange={(e) => setPhone(e.target.value)} type="text" className="form-control shadow"
                                    placeholder="Phone No"/>
                         </div>
                         <div className="form-group">
                             <label>Email</label>
-                            <input onChange={(e) => setEmail(e.target.value)} type="text" className="form-control border-0 shadow"
+                            <input onChange={(e) => setEmail(e.target.value)} type="text" className="form-control shadow"
                                    placeholder="Email" value={email}/>
                         </div>
                         <div className="">
 
                             <div className="mt-4">
-                                <select onChange={GetValue} className="form-select w-50 border-0 shadow">
+                                <select onChange={GetValue} className="form-select w-50 shadow">
                                     <option selected disabled>Choose a Payment Option</option>
                                     <option value="1">Cash On Delivery</option>
                                     <option value="2">SSLCOMMERZ</option>

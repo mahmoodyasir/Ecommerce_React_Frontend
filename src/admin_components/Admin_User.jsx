@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import Axios from "axios";
 import {admin_header, domain} from "../env";
 import {useGlobalState} from "../state/provider";
-import {Link} from "react-router-dom";
-import {de} from "suneditor/src/lang";
 
 const Admin_User = () => {
     const [{admin_profile}, dispatch] = useGlobalState()

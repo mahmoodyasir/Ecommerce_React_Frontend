@@ -10,6 +10,10 @@
 
 }
 
+.pagination_item{
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1200px){
     .right-side{
         width: 25rem;

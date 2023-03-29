@@ -1,14 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Link} from "react-router-dom";
+import React from 'react';
 import SingleWishList from "./SingleWishList";
-import Axios from "axios";
-import {domain, header} from "../../env";
 import {useGlobalState} from "../../state/provider";
 
 const WishList = () => {
 
     const [{ all_wishlist }, dispatch] = useGlobalState();
-    console.log(all_wishlist)
+    // console.log(all_wishlist)
 
     return (
         <div className="container">
