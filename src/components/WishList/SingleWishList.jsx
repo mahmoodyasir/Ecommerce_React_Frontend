@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link, useHistory} from "react-router-dom";
-import image from '../../image_folder/pixel_6_pro.jpg'
 import {domain, header} from "../../env";
 import {useGlobalState} from "../../state/provider";
 import Axios from "axios";
@@ -96,7 +95,7 @@ const SingleWishList = ({item}) => {
                                     </div>
 
                                     <div className="d-flex flex-column mt-4">
-                                        <button className="btn btn-primary btn-sm" type="button">Details</button>
+                                        <Link to={`/product/${item.id}`} className="btn btn-primary btn-sm" type="button">Details</Link>
                                         <button onClick={() => addtocart(item?.id)}
                                                 className="btn btn-outline-primary btn-sm mt-2" type="button">
                                             Add to Cart
