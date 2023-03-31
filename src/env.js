@@ -4,6 +4,7 @@
 
 
 export const domain = "http://localhost:8000";
+// export const domain = "http://yasirmamun.pythonanywhere.com";
 export const userToken = window.localStorage.getItem("token")
 export const adminToken = window.localStorage.getItem("admin_token")
 

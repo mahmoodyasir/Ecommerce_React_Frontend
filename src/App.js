@@ -38,7 +38,8 @@ const App = () => {
     const [{
         profile,
         page_reload,
-        admin_profile
+        admin_profile,
+        only_product
     }, dispatch] = useGlobalState()
     // console.log(cart_complete, "#### cart complete ####")
     // console.log(cart_incomplete, "#### cart Incomplete ####")
@@ -120,8 +121,7 @@ const App = () => {
         const category = async () => {
             await Axios({
                 method: "get",
-                url: `${domain}/api/category/`,
-                headers: admin_header
+                url: `${domain}/api/category/`
             }).then(response => {
                 // console.log(response.data, " CATEGORY ");
                 {
@@ -148,7 +148,7 @@ const App = () => {
             await Axios({
                 method: "get",
                 url: `${domain}/api/product/`,
-                headers: admin_header
+
             }).then(response => {
                 // console.log(response.data, " ONLY PRODUCTS ");
                 dispatch({
@@ -158,7 +158,7 @@ const App = () => {
             })
         }
         only_product()
-    }, [dispatch, admin_profile]);
+    }, [admin_profile]);
 
     useEffect(() => {
         const get_search_data = async () => {
@@ -189,7 +189,7 @@ const App = () => {
             })
         }
         getWishListItem();
-    }, [dispatch, page_reload]);
+    }, [dispatch, page_reload, only_product]);
 
 
     return (

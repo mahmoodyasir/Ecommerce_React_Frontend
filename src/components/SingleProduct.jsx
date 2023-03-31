@@ -9,7 +9,7 @@ import {useGlobalState} from "../state/provider";
 import toast from "react-hot-toast";
 
 const SingleProduct = ({item}) => {
-    const [{profile, cart_incomplete, all_wishlist}, dispatch] = useGlobalState()
+    const [{profile, cart_incomplete, all_wishlist, only_product, page_reload}, dispatch] = useGlobalState()
     const [ifadded, setIfadded] = useState(null);
     const [quantity, setQuantity] = useState(null);
     const [cartId, setCartId] = useState(null);
@@ -20,7 +20,7 @@ const SingleProduct = ({item}) => {
     } else {
         cart_product_length = 0
     }
-    // console.log(cart_incomplete)
+    // console.log(all_wishlist)
 
     const history = useHistory();
     const addtocart = async (id) => {
@@ -59,7 +59,7 @@ const SingleProduct = ({item}) => {
                     setIfadded(response.data["status"])
                     setQuantity(response.data["cartdata"]?.[0]?.quantity)
                     setCartId(response.data["cartdata"]?.[0]?.id)
-                    // console.log(response.data["cartdata"]?.[0]?.id)
+                    // console.log(response.data["cartdata"]?.[0]?.product?.[0]?.id)
                     dispatch({
                         type: "PAGE_RELOAD",
                         page_reload: response.data["status"]
@@ -68,7 +68,7 @@ const SingleProduct = ({item}) => {
             }
         }
         CheckCartData();
-    }, [cart_product_length, quantity]);
+    }, [cart_product_length, quantity, only_product]);
 
 
     const increase_cart = async (id) => {
@@ -133,13 +133,14 @@ const SingleProduct = ({item}) => {
             if (all_wishlist !== null && all_wishlist[0]?.wishedProduct.length > 0) {
                 for (i = 0; i < all_wishlist[0]?.wishedProduct.length; i++) {
                     if (all_wishlist[0]?.wishedProduct[i]?.id === item?.id) {
-                        setWish(false)
+                        setWish(item?.id)
+                        // console.log("Matched ", item?.title, item?.id)
                     }
                 }
             }
         }
         wishlistChecker();
-    }, [all_wishlist]);
+    }, [all_wishlist, page_reload, only_product]);
 
 
     return (
@@ -167,7 +168,7 @@ const SingleProduct = ({item}) => {
                 <div className="card-footer border-0 p-0 bg-white">
 
                     {
-                        wish === false ?
+                        wish === item?.id ?
                             <>
                                 <button style={{borderBottomLeftRadius: "6px"}}
                                         className="border-0 py-2 m-0 w-50 bg-warning text-white disabled"
