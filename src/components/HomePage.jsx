@@ -117,7 +117,7 @@ const HomePage = () => {
                             only_product !== null &&
                             only_product?.results.map((item, i) => (
                                 <div key={i} className="col-md-6 col-lg-3 my-2">
-                                    <SingleProduct item={item}/>
+                                    <SingleProduct item={item} identity={1}/>
                                 </div>
                             ))
                         }

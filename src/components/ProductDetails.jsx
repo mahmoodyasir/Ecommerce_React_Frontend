@@ -178,7 +178,11 @@ const ProductDetails = () => {
                         <div className="col-md-4">
                             <div className="image_resize">
                                 {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-                                <img className="mt-4" src={product?.image} alt="Card image cap"/>
+                                <img className="mt-4" src={product?.image}
+                                     onError={(e) => {
+                                         e.target.src = product?.productImageUrl
+                                     }}
+                                     alt="Card image cap"/>
                             </div>
 
                             <div className="ms-4 col-md-12 mt-2">
@@ -275,7 +279,7 @@ const ProductDetails = () => {
                     categoryproducts !== null &&
                     categoryproducts[0]?.category_products?.map((product, i) => (
                         <div key={i} className="col-md-3 my-2">
-                            <SingleProduct item={product}/>
+                            <SingleProduct item={product} identity={2}/>
                         </div>
                     ))
                 }

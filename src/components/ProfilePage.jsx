@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import {useGlobalState} from "../state/provider";
-import {admin_header, domain, header} from "../env";
+import {admin_header, domain, header, imageApiKey} from "../env";
 import Axios from "axios";
 import '../components/css/home.css'
+import toast from "react-hot-toast";
 
 const ProfilePage = () => {
     const [{profile, admin_profile}, dispatch] = useGlobalState()
@@ -17,52 +18,75 @@ const ProfilePage = () => {
     // console.log(image, " $$$$$$$$ This is profile image")
 
     let header_value;
-    if (profile !== null)
-    {
+    if (profile !== null) {
         header_value = header
-    }
-    else
-    {
+    } else {
         header_value = admin_header
+    }
+
+    console.log(admin_profile?.image)
+    const onImageError = (e) => {
+        profile !== null ?
+            e.target.src = profile?.profileImageUrl
+            :
+            e.target.src = admin_profile?.profileImageUrl
     }
 
     const userdataupdate = async () => {
 
         await Axios({
-                method: "post",
-                url: `${domain}/api/userdataupdate/`,
-                headers: header_value,
-                data: {
-                    "first_name": firstname,
-                    "last_name": lastname,
-                    "email": email
-                }
-            }).then(response => {
-                console.log(response.data);
-                dispatch({
-                    type: "PAGE_RELOAD",
-                    page_reload: response.data
-                })
+            method: "post",
+            url: `${domain}/api/userdataupdate/`,
+            headers: header_value,
+            data: {
+                "first_name": firstname,
+                "last_name": lastname,
+                "email": email
+            }
+        }).then(response => {
+            console.log(response.data);
+            dispatch({
+                type: "PAGE_RELOAD",
+                page_reload: response.data
             })
+        })
 
     }
 
     const update_profile_image = async () => {
+        console.log('Within Update Image')
         const formdata = new FormData()
         formdata.append("image", image)
 
         await Axios({
-                method: "post",
-                url: `${domain}/api/profile_image_update/`,
-                headers: header_value,
-                data: formdata
-            }).then(response => {
-                console.log(response.data)
-                dispatch({
-                    type: "PAGE_RELOAD",
-                    page_reload: response.data
+            method: "post",
+            url: `https://api.imgbb.com/1/upload?key=${imageApiKey}`,
+            data: formdata
+
+        }).then(response => {
+            console.log(response.data)
+            if (response.data.success) {
+
+                const newformdata = new FormData()
+                newformdata.append("image", image)
+                newformdata.append("profileImageUrl", response?.data?.data?.display_url)
+
+                Axios({
+                    method: "post",
+                    url: `${domain}/api/profile_image_update/`,
+                    headers: header_value,
+                    data: newformdata
+                }).then(response => {
+                    console.log(response.data)
+                    toast.success("Profile Image Updated")
+                    dispatch({
+                        type: "PAGE_RELOAD",
+                        page_reload: response.data
+                    })
                 })
-            })
+            }
+        })
+
 
     }
 
@@ -74,31 +98,34 @@ const ProfilePage = () => {
             alert("Your Old Password cannot be the New Password")
         } else {
             await Axios({
-                    method: "post",
-                    url: `${domain}/api/change_password/`,
-                    headers: header_value,
-                    data: {
-                        "old_pass": oldpass,
-                        "new_pass": newpass
-                    }
-                }).then(response => {
-                    console.log(response.data["message"])
-                    if (response.data["message"] === true) {
-                        alert("Password Changed Successfully")
-                    } else {
-                        alert("Password not matched !! ")
-                    }
-                })
+                method: "post",
+                url: `${domain}/api/change_password/`,
+                headers: header_value,
+                data: {
+                    "old_pass": oldpass,
+                    "new_pass": newpass
+                }
+            }).then(response => {
+                console.log(response.data["message"])
+                if (response.data["message"] === true) {
+                    alert("Password Changed Successfully")
+                } else {
+                    alert("Password not matched !! ")
+                }
+            })
         }
 
     }
+
 
     return (
         <div className="container">
             <div className="row">
                 <div className="media">
                     <img src={profile !== null ? `${domain}${profile?.image}` : `${domain}${admin_profile?.image}`}
-                         className="rounded-circle account-image"/>
+                         className="rounded-circle account-image"
+                         onError={onImageError}
+                    />
                     <div className="media-body">
                         <h2>Username: {profile !== null ? profile?.prouser?.username : admin_profile?.prouser?.username}</h2>
                         <p>{profile !== null ? profile?.prouser?.email : admin_profile?.prouser?.email}</p>

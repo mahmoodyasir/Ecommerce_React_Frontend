@@ -33,7 +33,9 @@ const Admin_Product_Details = () => {
             {
                 <div className="row">
                     <div className="col-md-6 image_resize my-4">
-                        <img src={product?.image} alt="Card image cap"/>
+                        <img src={product?.image} onError={(e) => {
+                            e.target.src = product?.productImageUrl
+                        }} alt="Card image cap"/>
                     </div>
 
                     <div className="col-md-4 card border-primary my-4 mb-3">

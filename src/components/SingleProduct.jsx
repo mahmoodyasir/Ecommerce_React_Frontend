@@ -8,7 +8,7 @@ import "./css/SingleProduct.css"
 import {useGlobalState} from "../state/provider";
 import toast from "react-hot-toast";
 
-const SingleProduct = ({item}) => {
+const SingleProduct = ({item, identity}) => {
     const [{profile, cart_incomplete, all_wishlist, only_product, page_reload}, dispatch] = useGlobalState()
     const [ifadded, setIfadded] = useState(null);
     const [quantity, setQuantity] = useState(null);
@@ -20,7 +20,7 @@ const SingleProduct = ({item}) => {
     } else {
         cart_product_length = 0
     }
-    // console.log(all_wishlist)
+    console.log(identity)
 
     const history = useHistory();
     const addtocart = async (id) => {
@@ -149,13 +149,26 @@ const SingleProduct = ({item}) => {
             <div>
 
                 <div className="d-flex justify-content-center">
-                    <Link to={`/product/${item.id}`}>
-                        {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-                        <img className="card-img-top mt-2" src={item.image} onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = `${domain}${item.image}`
-                        }}/>
-                    </Link>
+                    {
+                        identity === 1 ?
+                            <>
+                                <Link to={`/product/${item.id}`}>
+                                    {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
+                                    <img className="card-img-top mt-2" src={item.image} onError={(e) => {
+                                        e.target.src = item?.productImageUrl
+                                    }}/>
+                                </Link>
+                            </>
+                            :
+                            <>
+                                <Link to={`/product/${item.id}`}>
+                                    {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
+                                    <img className="card-img-top mt-2" src={`${domain}${item.image}`} onError={(e) => {
+                                        e.target.src = item?.productImageUrl
+                                    }}/>
+                                </Link>
+                            </>
+                    }
                 </div>
 
                 <div className="card-body">

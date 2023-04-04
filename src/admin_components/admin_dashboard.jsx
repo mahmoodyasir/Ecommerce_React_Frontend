@@ -91,7 +91,7 @@ const Admin_dashboard = () => {
                    </NavIcon>
 
                     <div className="mb-4">
-                        <img src={`${domain}${profile?.image}`} className="rounded-circle account-image" />
+                        <img src={`${domain}${profile?.image}`} onError={(e) => {e.target.src = profile?.profileImageUrl}} className="rounded-circle account-image" />
                         <Link className="ms-3" to="/profile" target="_blank"><button className="btn link-hover text-white btn-info">Username: {profile?.prouser?.username}</button></Link>
                     </div>
 
