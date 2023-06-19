@@ -3,9 +3,9 @@
 
 
 
-// export const domain = "http://localhost:8000";
+export const domain = "http://localhost:8000";
 export const imageApiKey = '5a73a4da3332ae51a7b323c8c3f97836';
-export const domain = "https://yasirmamun71.pythonanywhere.com";
+// export const domain = "https://yasirmamun71.pythonanywhere.com";
 export const userToken = window.localStorage.getItem("token")
 export const adminToken = window.localStorage.getItem("admin_token")
 
